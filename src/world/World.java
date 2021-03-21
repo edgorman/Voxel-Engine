@@ -30,7 +30,7 @@ public class World extends JPanel{
 	
 	private static final long serialVersionUID = 1L;
 
-	public ArrayList<Cube> voxels = new ArrayList<Cube>();
+	public ArrayList<Chunk> chunks = new ArrayList<Chunk>();
 	static Vector lightVector = new Vector(0, 0, 1);
 
 	public boolean renderOutline = true;
@@ -55,11 +55,19 @@ public class World extends JPanel{
 		this.addMouseWheelListener(this.player.input);
 		
 		// Init world objects
-		this.voxels.add(new Cube(new Vector(0, -5, 0), 2, Color.red));
-		this.voxels.add(new Cube(new Vector(0, 0, 0), 2, Color.red));
-		this.voxels.add(new Cube(new Vector(2, 0, 0), 2, Color.red));
-		this.voxels.add(new Cube(new Vector(4, 0, 0), 2, Color.red));
-		this.voxels.add(new Cube(new Vector(6, 0, 0), 2, Color.red));
+		chunks.add(new Chunk(new Vector(0, 0, 0)));
+		try{
+			chunks.get(0).addVoxel(new Voxel(new Vector(0, 0, 0), 2, Color.red));
+			chunks.get(0).addVoxel(new Voxel(new Vector(15, 0, 0), 2, Color.red));
+			chunks.get(0).addVoxel(new Voxel(new Vector(0, 15, 0), 2, Color.red));
+			chunks.get(0).addVoxel(new Voxel(new Vector(15, 15, 0), 2, Color.red));
+			chunks.get(0).addVoxel(new Voxel(new Vector(0, 0, 15), 2, Color.red));
+			chunks.get(0).addVoxel(new Voxel(new Vector(15, 0, 15), 2, Color.red));
+			chunks.get(0).addVoxel(new Voxel(new Vector(0, 15, 15), 2, Color.red));
+			chunks.get(0).addVoxel(new Voxel(new Vector(15, 15, 15), 2, Color.red));
+		}
+		catch(Exception e){ System.out.println(e); }
+
 		this.update();
 	}
 
@@ -77,9 +85,6 @@ public class World extends JPanel{
 
 	// World methods --------------------
 	public void update(){
-		// TODO: remove later
-		this.voxels.get(0).rotation+=.01;
-		this.voxels.get(0).update();
 	}
 
 	public void paint(Graphics g){
@@ -108,21 +113,23 @@ public class World extends JPanel{
 	public void setRenderObjects(){
 		this.renderObjects = new ArrayList<Polygon>();
 
-		for (Cube c : this.voxels){
-			for (Polygon p : c.faces){
-				p.update(this.player);
+		for (Chunk c : this.chunks){
+			for (Voxel v : c.getVoxelList()){
+				for (Polygon p : v.faces){
+					p.update(this.player);
 
-				// If the player and polygon face same direction
-				if (p.normal.dotProduct(this.player.viewTo) >= 0)
-					continue;
-				
-				// If the polygon is within screen bounds
-				if (!p.draw)
-					continue;
+					// If the player and polygon face same direction
+					if (p.normal.dotProduct(this.player.viewTo) >= 0)
+						continue;
+					
+					// If the polygon is within screen bounds
+					if (!p.draw)
+						continue;
 
-				// TODO: Ignore sides which border another solid block
+					// TODO: Ignore sides which border another solid block
 
-				this.renderObjects.add(p);
+					this.renderObjects.add(p);
+				}
 			}
 		}
 	}

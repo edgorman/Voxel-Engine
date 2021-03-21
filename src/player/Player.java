@@ -145,9 +145,14 @@ public class Player{
 		if (this.input.debug){
 			g.setColor(Color.black);
 			g.drawString("Voxel Terrain - v0.1", 10, 20);
-			g.drawString("FPS: \t" + (int) w.fps, 10, 40);
-			g.drawString("XYZ: \t" + this.viewFrom, 10, 60);
-			g.drawString("V/P: \t" + w.voxels.size() + "," + w.renderObjects.size(), 10, 80);
+			g.drawString("FPS: " + (int) w.fps, 10, 40);
+			g.drawString("XYZ: " + this.viewFrom, 10, 60);
+			g.drawString("Zoom: " + this.zoom, 10, 80);
+			
+			g.drawString("Objects loaded: ", 10, 120);
+			g.drawString(" Chunks: " + w.chunks.size(), 10, 140);
+			g.drawString(" Voxels: " + "?", 10, 160);
+			g.drawString(" Polygons: " + w.renderObjects.size() + "," + w.renderObjects.size(), 10, 180);
 		}
 	}
 }

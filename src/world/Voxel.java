@@ -3,18 +3,18 @@ package world;
 import java.awt.Color;
 
 /**
- * The Cube object represents a cube in 3D space.
+ * The Voxel object represents a cube in 3D space.
  * 
  * @author Edward Gorman
  */
-public class Cube {
+public class Voxel {
 	public Vector position;
 	public double rotation;
 	public double length;
 	public Color color;
 	public Polygon[] faces;
 	
-	public Cube(Vector p, double l, Color c){
+	public Voxel(Vector p, double l, Color c){
 		this.position = p;
 		this.rotation = 0;
 		this.length = l;
@@ -84,7 +84,7 @@ public class Cube {
 			new Vector(x1, y1, this.position.z+length),
 			new Vector(x1, y1, this.position.z),
 		};
-		
+
 	}
 
 }

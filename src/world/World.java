@@ -34,6 +34,7 @@ public class World extends JPanel{
 	static Vector lightVector = new Vector(0, 0, 1);
 
 	public boolean renderOutline = true;
+	public boolean renderNormal = true;
 	public ArrayList<Polygon> renderObjects = new ArrayList<Polygon>();
 
 	public Player player;
@@ -55,18 +56,27 @@ public class World extends JPanel{
 		this.addMouseWheelListener(this.player.input);
 		
 		// Init world objects
-		chunks.add(new Chunk(new Vector(0, 0, 0)));
-		try{
-			chunks.get(0).addVoxel(new Voxel(new Vector(0, 0, 0), 2, Color.red));
-			chunks.get(0).addVoxel(new Voxel(new Vector(15, 0, 0), 2, Color.red));
-			chunks.get(0).addVoxel(new Voxel(new Vector(0, 15, 0), 2, Color.red));
-			chunks.get(0).addVoxel(new Voxel(new Vector(15, 15, 0), 2, Color.red));
-			chunks.get(0).addVoxel(new Voxel(new Vector(0, 0, 15), 2, Color.red));
-			chunks.get(0).addVoxel(new Voxel(new Vector(15, 0, 15), 2, Color.red));
-			chunks.get(0).addVoxel(new Voxel(new Vector(0, 15, 15), 2, Color.red));
-			chunks.get(0).addVoxel(new Voxel(new Vector(15, 15, 15), 2, Color.red));
+		for (int x = 0; x < 3; x++){
+			for (int y = 0; y < 3; y++){
+				for (int z = 0; z < 3; z++){
+					int xn = (x * 2) * Chunk.size;
+					int yn = (y * 2) * Chunk.size;
+					int zn = (z * 2) * Chunk.size;
+					chunks.add(new Chunk(new Vector(xn, yn, zn)));
+					try{
+						chunks.get(chunks.size()-1).addVoxel(new Voxel(new Vector(xn+0, yn+0, zn+0), 2, Color.red));
+						chunks.get(chunks.size()-1).addVoxel(new Voxel(new Vector(xn+15, yn+0, zn+0), 2, Color.red));
+						chunks.get(chunks.size()-1).addVoxel(new Voxel(new Vector(xn+0, yn+15, zn+0), 2, Color.red));
+						chunks.get(chunks.size()-1).addVoxel(new Voxel(new Vector(xn+15, yn+15, zn+0), 2, Color.red));
+						chunks.get(chunks.size()-1).addVoxel(new Voxel(new Vector(xn+0, yn+0, zn+15), 2, Color.red));
+						chunks.get(chunks.size()-1).addVoxel(new Voxel(new Vector(xn+15, yn+0, zn+15), 2, Color.red));
+						chunks.get(chunks.size()-1).addVoxel(new Voxel(new Vector(xn+0, yn+15, zn+15), 2, Color.red));
+						chunks.get(chunks.size()-1).addVoxel(new Voxel(new Vector(xn+15, yn+15, zn+15), 2, Color.red));
+					}
+					catch(Exception e){ System.out.println(e); }
+				}
+			}
 		}
-		catch(Exception e){ System.out.println(e); }
 
 		this.update();
 	}

@@ -14,8 +14,8 @@ public class Plane {
 
 	public Plane(Polygon p){
 		this.p = new Vector(p.vertexes[0]);
-		this.r1 = p.vertexes[1].subtract(p.vertexes[0]).normalise();
-		this.r2 = p.vertexes[2].subtract(p.vertexes[0]).normalise();
+		this.r1 = p.vertexes[1].subtract(p.vertexes[0]); //.normalise();
+		this.r2 = p.vertexes[2].subtract(p.vertexes[0]); //.normalise();
 		this.normal = this.r1.crossProduct(this.r2);
 	}
 	

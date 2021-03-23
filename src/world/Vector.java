@@ -127,7 +127,7 @@ public class Vector {
     public Vector project(Player player){ 
 		Vector viewVector = this.subtract(player.viewFrom);
         Vector playerVector = player.viewPlane.p;
-        Vector playerNormal = player.viewPlane.normal;
+        Vector playerNormal = player.viewPlane.normal;  // may need to normalise this...
 
 		double scale = (playerNormal.multiply(playerVector).sum() - playerNormal.multiply(player.viewFrom).sum()) / playerNormal.multiply(viewVector).sum();
         Vector viewScale = viewVector.scale(scale).add(player.viewFrom);

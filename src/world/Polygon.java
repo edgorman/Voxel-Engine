@@ -1,6 +1,7 @@
 package world;
 
 import java.awt.Graphics;
+import java.util.Arrays;
 import java.awt.Color;
 
 import window.Window;
@@ -17,8 +18,14 @@ public class Polygon implements Comparable<Polygon>{
 	public Vector normal;
 	public int[] projectX;
 	public int[] projectY;
+	public int projectCX;
+	public int projectCY;
+	public int projectNX;
+	public int projectNY;
+
 	public Color color;
 	public double lighting = 1;
+
 	public double distance;
 
 	public boolean draw = true;
@@ -29,7 +36,7 @@ public class Polygon implements Comparable<Polygon>{
 		this.vertexes = new Vector[x.length];
 		for (int i = 0; i < x.length; i++)
 			this.vertexes[i] = new Vector(x[i], y[i], z[i]);
-		this.normal = new Plane(this).normal;
+		this.normal = new Plane(this).normal.normalise();
 
 		this.color = c;
 		this.seeThrough = s; 
@@ -49,38 +56,58 @@ public class Polygon implements Comparable<Polygon>{
 		}
 		
 		// Calculate polygon lighting
-		this.normal = new Plane(this).normal;
+		this.normal = new Plane(this).normal.normalise();
 		double angle = Math.acos(World.lightVector.multiply(this.normal).sum() / World.lightVector.length());
 		this.lighting = 0.2 + 1 - Math.sqrt(Math.toDegrees(angle)/180);
 		this.lighting = Math.max(this.lighting, 0);
 		this.lighting = Math.min(this.lighting, 1);
 
-		this.distance = this.getDistance(player);
-	}
-	
-	public double getDistance(Player player){
+		// Calculate normal line from center
+		this.projectCX = (int) Arrays.stream(this.projectX).average().getAsDouble();
+		this.projectCY = (int) Arrays.stream(this.projectY).average().getAsDouble();
+		this.projectNX = this.projectCX;
+		this.projectNY = this.projectCY;
+
+		// Calculate distance to player
 		double total = 0;
 		for(Vector v : this.vertexes)
 			total += player.viewFrom.distance(v);
-		return total / this.vertexes.length;
+		this.distance = total / this.vertexes.length;
+	}
+
+	public Vector getCentre(){
+		Vector m = new Vector(0, 0, 0);
+		for (Vector v : this.vertexes)
+			m = m.add(v);
+		return m.scale((double) 1 / this.vertexes.length);
 	}
 	
 	void drawPolygon(Graphics g, World w, Player p){
-		if(draw && visible)
-		{
-			g.setColor(new Color((int)(this.color.getRed() * lighting), (int)(this.color.getGreen() * lighting), (int)(this.color.getBlue() * lighting)));
-			if(seeThrough)
-				g.drawPolygon(this.projectX, this.projectY, this.projectX.length);
-			else
+		if(this.draw && this.visible){
+			if (!this.seeThrough){
+				g.setColor(
+					new Color(
+						(int)(this.color.getRed() * lighting), 
+						(int)(this.color.getGreen() * lighting), 
+						(int)(this.color.getBlue() * lighting)
+					)
+				);
 				g.fillPolygon(this.projectX, this.projectY, this.projectX.length);
-			if(w.renderOutline){
+			}
+
+			if (p.polygonMouseOver == this){
+				g.setColor(new Color(255, 255, 255, 100));
+				g.fillPolygon(this.projectX, this.projectY, this.projectX.length);
+			}
+			
+			if (w.renderOutline){
 				g.setColor(new Color(0, 0, 0));
 				g.drawPolygon(this.projectX, this.projectY, this.projectX.length);
 			}
 
-			if(p.polygonMouseOver == this){
-				g.setColor(new Color(255, 255, 255, 100));
-				g.fillPolygon(this.projectX, this.projectY, this.projectX.length);
+			if(w.renderNormal){
+				g.setColor(new Color(0, 0, 0));
+				g.drawLine(this.projectCX, this.projectCY, this.projectNX, this.projectNY);
 			}
 		}
 	}

@@ -39,7 +39,7 @@ public class Vector {
         return this.x == v.x && this.y == v.y && this.z == v.z;
     } 
 
-    // Basic mathematical methods --------------------
+    // Basic vector methods --------------------
     public Vector add(Vector v){
         return new Vector(
             this.x + v.x,
@@ -88,11 +88,19 @@ public class Vector {
         );
     }
 
+    public Vector scale(Vector s){
+        return new Vector(
+            this.x * s.x,
+            this.y * s.y,
+            this.z * s.z
+        );
+    }
+
     public double sum(){
         return this.x + this.y + this.z;
     }
 
-    // Advanced mathematical methods --------------------
+    // Advanced vector methods --------------------
     public Vector normalise(){
         if(this.length() > 0)
             return this.scale(1 / this.length());
@@ -133,8 +141,8 @@ public class Vector {
         Vector viewScale = viewVector.scale(scale).add(player.viewFrom);
 		
 		return new Vector(
-			player.viewW2.x * viewScale.x + player.viewW2.y * viewScale.y + player.viewW2.z * viewScale.z, 
-			player.viewW1.x * viewScale.x + player.viewW1.y * viewScale.y + player.viewW1.z * viewScale.z, 
+			player.viewW2.dotProduct(viewScale), 
+			player.viewW1.dotProduct(viewScale),
 			scale
 		);
 	}

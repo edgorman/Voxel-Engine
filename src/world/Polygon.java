@@ -43,9 +43,10 @@ public class Polygon implements Comparable<Polygon>{
 	}
 	
 	public void update(Player player){
+		this.draw = true;
+		this.normal = new Plane(this).normal;
 		this.projectX = new int[this.vertexes.length];
 		this.projectY = new int[this.vertexes.length];
-		this.draw = true;
 
 		for (int i=0; i<this.vertexes.length; i++){
 			Vector project = this.vertexes[i].project(player);
@@ -56,11 +57,9 @@ public class Polygon implements Comparable<Polygon>{
 		}
 		
 		// Calculate polygon lighting
-		this.normal = new Plane(this).normal.normalise();
-		double angle = Math.acos(World.lightVector.multiply(this.normal).sum() / World.lightVector.length());
+		double angle = Math.acos(World.lightVector.multiply(this.normal.normalise()).sum() / World.lightVector.length());
 		this.lighting = 0.2 + 1 - Math.sqrt(Math.toDegrees(angle)/180);
-		this.lighting = Math.max(this.lighting, 0);
-		this.lighting = Math.min(this.lighting, 1);
+		this.lighting = Math.min(Math.max(this.lighting, 0), 1);
 
 		// Calculate normal line from center
 		this.projectCX = (int) Arrays.stream(this.projectX).average().getAsDouble();

@@ -1,4 +1,4 @@
-package world;
+package com.gorman.voxel_engine.world;
 
 import java.util.ArrayList;
 

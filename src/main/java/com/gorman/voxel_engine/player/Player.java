@@ -1,13 +1,13 @@
-package player;
+package com.gorman.voxel_engine.player;
 
 import java.awt.Color;
 import java.awt.Graphics;
 
-import window.Window;
-import world.Vector;
-import world.World;
-import world.Plane;
-import world.Polygon;
+import com.gorman.voxel_engine.window.Window;
+import com.gorman.voxel_engine.world.Plane;
+import com.gorman.voxel_engine.world.Polygon;
+import com.gorman.voxel_engine.world.Vector;
+import com.gorman.voxel_engine.world.World;
 
 /**
  * The Player object represents the player in the game world.

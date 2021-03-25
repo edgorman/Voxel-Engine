@@ -1,4 +1,4 @@
-package player;
+package com.gorman.voxel_engine.player;
 
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
@@ -8,7 +8,7 @@ import java.awt.event.MouseMotionListener;
 import java.awt.event.MouseWheelEvent;
 import java.awt.event.MouseWheelListener;
 
-import world.World;
+import com.gorman.voxel_engine.world.World;
 
 /**
  * The Listener object handles user input.

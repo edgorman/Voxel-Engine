@@ -1,6 +1,6 @@
-package world;
+package com.gorman.voxel_engine.world;
 
-import player.Player;
+import com.gorman.voxel_engine.player.Player;
 
 /**
  * The Vector object represents a point in 3D space.

@@ -1,4 +1,4 @@
-package world;
+package com.gorman.voxel_engine.world;
 
 /**
  * The Plane object represents a plane in 3D space.

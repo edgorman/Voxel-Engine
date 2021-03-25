@@ -1,4 +1,4 @@
-package window;
+package com.gorman.voxel_engine.window;
 
 import javax.swing.JFrame;
 

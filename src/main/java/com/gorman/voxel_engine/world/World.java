@@ -1,19 +1,20 @@
-package world;
+package com.gorman.voxel_engine.world;
 
+import java.awt.AWTException;
 import java.awt.Color;
+import java.awt.Cursor;
 import java.awt.Graphics;
+import java.awt.Point;
 import java.awt.Robot;
+import java.awt.Toolkit;
+import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 import java.util.Collections;
-import java.awt.Toolkit;
-import java.awt.AWTException;
-import java.awt.image.BufferedImage;
-import java.awt.Point;
-import java.awt.Cursor;
+
 import javax.swing.JPanel;
 
-import window.Window;
-import player.Player;
+import com.gorman.voxel_engine.player.Player;
+import com.gorman.voxel_engine.window.Window;
 
 /**
  * The World object handles the following:

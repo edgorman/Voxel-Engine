@@ -2,6 +2,8 @@
 
 A 3D rendering engine built in Java without any dependencies. Implements a rasterization approach.
 
+[![Maven CI](https://github.com/edgorman/Voxel-Engine/actions/workflows/maven.yml/badge.svg)](https://github.com/edgorman/Voxel-Engine/actions/workflows/maven.yml)
+
 ## Installation
 Use the following command to clone the repository:
 ```

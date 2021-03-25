@@ -31,7 +31,7 @@ public class World extends JPanel{
 	private static final long serialVersionUID = 1L;
 
 	public ArrayList<Chunk> chunks = new ArrayList<Chunk>();
-	static Vector lightVector = new Vector(0, 0, 1);
+	static Vector lightVector = new Vector(0, 0, -1);
 
 	public boolean renderOutline = true;
 	public boolean renderNormal = true;
@@ -128,16 +128,17 @@ public class World extends JPanel{
 				for (Polygon p : v.faces){
 					p.update(this.player);
 
-					// If the player and polygon face same direction
-					if (p.normal.dotProduct(this.player.viewTo) >= 0)
-						continue;
-					
-					// If the polygon is within screen bounds
+					// If the polygon is outside screen bounds
 					if (!p.draw)
+						continue;
+
+					// If the player and polygon face same direction
+					if (p.normal.dotProduct(this.player.viewTo.subtract(this.player.viewFrom).inverse()) >= 0)
 						continue;
 
 					// TODO: Ignore sides which border another solid block
 
+					// If here, object must be renderable
 					this.renderObjects.add(p);
 				}
 			}

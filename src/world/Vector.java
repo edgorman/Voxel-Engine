@@ -27,7 +27,7 @@ public class Vector {
 	
     // General methods --------------------
 	public String toString(){
-        return (int) this.x + "," + (int) this.y + "," + (int) this.z;
+        return String.format("%.0f,%.0f,%.0f", this.x, this.y, this.z);
     }
 
     @Override
@@ -53,6 +53,14 @@ public class Vector {
             this.x - v.x,
             this.y - v.y,
             this.z - v.z
+        );
+    }
+
+    public Vector absolute(Vector v){
+        return new Vector(
+            Math.abs(this.x - v.x),
+            Math.abs(this.y - v.y),
+            Math.abs(this.z - v.z)
         );
     }
 

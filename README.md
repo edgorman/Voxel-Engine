@@ -11,14 +11,19 @@ cd your/repo/directory
 git clone https://github.com/edgorman/Voxel-Engine
 ```
 
-Must also have a recent Java version, this repo uses [Java 15.0.2](https://www.oracle.com/uk/java/technologies/javase-jdk15-downloads.html).
+Must have a recent Java version, this repo uses [Java 15.0.2](https://www.oracle.com/uk/java/technologies/javase-jdk15-downloads.html).
+
+Must also have a recent Maven version, this repo uses [Maven 3.6.3](https://maven.apache.org/download.cgi).
 
 ## Usage
 Open a command prompt and run the following commands:
 ```
-cd src/
-javac Main.java
-java Main
+mvn package
+```
+
+Assuming no errors have been thrown, you can run the application:
+```
+java -cp target/voxel_engine-0.1.jar com.gorman.voxel_engine.Main
 ```
 
 ## Contributing

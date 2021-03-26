@@ -81,7 +81,7 @@ public class Polygon implements Comparable<Polygon>{
 		return m.scale((double) 1 / this.vertexes.length);
 	}
 	
-	void drawPolygon(Graphics g, World w, Player p){
+	public void drawPolygon(Graphics g, World w, Player p){
 		if(this.draw && this.visible){
 			if (!this.seeThrough){
 				g.setColor(

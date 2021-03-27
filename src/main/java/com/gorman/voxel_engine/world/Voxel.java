@@ -10,14 +10,13 @@ import java.awt.Color;
 public class Voxel {
 	public Vector position;
 	public double rotation;
-	public double length;
+	static double length = 1;
 	public Color color;
 	public Polygon[] faces;
 	
-	public Voxel(Vector p, double l, Color c){
+	public Voxel(Vector p, Color c){
 		this.position = p;
 		this.rotation = 0;
-		this.length = l;
 		this.color = c;
 
 		this.faces = new Polygon[6];

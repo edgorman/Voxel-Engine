@@ -26,6 +26,14 @@ public class TestVector
     }
 
     @Test
+    public void checkNegativeZero(){
+        Vector u = new Vector(0, 0, 0);
+        Vector v = new Vector(-0, -0, -0);
+
+        assertTrue(u.equals(v));
+    }
+
+    @Test
     public void checkAddition(){
         Vector u = new Vector(0, 0, 0);
         Vector v = new Vector(1, 2, 3);

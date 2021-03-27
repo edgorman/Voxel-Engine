@@ -9,6 +9,8 @@ import com.gorman.voxel_engine.player.Player;
  * @author Edward Gorman
  */
 public class Vector {
+    public static double e = 0.0000001d;
+
 	public double x;
     public double y;
     public double z;
@@ -17,12 +19,20 @@ public class Vector {
 		this.x = x;
 		this.y = y;
 		this.z = z;
+
+        if (Math.abs(this.x) < e) this.x = 0d;
+        if (Math.abs(this.y) < e) this.y = 0d;
+        if (Math.abs(this.z) < e) this.z = 0d;
 	}
 
     public Vector(Vector v){
 		this.x = v.x;
 		this.y = v.y;
 		this.z = v.z;
+
+        if (Math.abs(this.x) < e) this.x = 0d;
+        if (Math.abs(this.y) < e) this.y = 0d;
+        if (Math.abs(this.z) < e) this.z = 0d;
 	}
 	
     // General methods --------------------

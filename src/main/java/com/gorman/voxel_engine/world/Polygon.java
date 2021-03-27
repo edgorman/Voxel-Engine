@@ -92,6 +92,7 @@ public class Polygon implements Comparable<Polygon>{
 					)
 				);
 				g.fillPolygon(this.projectX, this.projectY, this.projectX.length);
+				// System.out.println(this.normal);
 			}
 
 			if (p.polygonMouseOver == this){

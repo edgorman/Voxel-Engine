@@ -35,7 +35,7 @@ public class World extends JPanel{
 	static Vector lightVector = new Vector(0, 0, -1);
 
 	public boolean renderOutline = true;
-	public boolean renderNormal = true;
+	public boolean renderNormal = false;
 	public ArrayList<Polygon> renderObjects = new ArrayList<Polygon>();
 
 	public Player player;
@@ -57,44 +57,22 @@ public class World extends JPanel{
 		this.addMouseWheelListener(this.player.input);
 		
 		// Init world objects
-		// for (int x = 0; x < 3; x++){
-		// 	for (int y = 0; y < 3; y++){
-		// 		for (int z = 0; z < 3; z++){
-		// 			int xn = (x * 2) * Chunk.size;
-		// 			int yn = (y * 2) * Chunk.size;
-		// 			int zn = (z * 2) * Chunk.size;
-		// 			chunks.add(new Chunk(new Vector(xn, yn, zn)));
-		// 			try{
-		// 				chunks.get(chunks.size()-1).addVoxel(new Voxel(new Vector(xn+0, yn+0, zn+0), Color.red));
-		// 				chunks.get(chunks.size()-1).addVoxel(new Voxel(new Vector(xn+15, yn+0, zn+0), Color.red));
-		// 				chunks.get(chunks.size()-1).addVoxel(new Voxel(new Vector(xn+0, yn+15, zn+0), Color.red));
-		// 				chunks.get(chunks.size()-1).addVoxel(new Voxel(new Vector(xn+15, yn+15, zn+0), Color.red));
-		// 				chunks.get(chunks.size()-1).addVoxel(new Voxel(new Vector(xn+0, yn+0, zn+15), Color.red));
-		// 				chunks.get(chunks.size()-1).addVoxel(new Voxel(new Vector(xn+15, yn+0, zn+15), Color.red));
-		// 				chunks.get(chunks.size()-1).addVoxel(new Voxel(new Vector(xn+0, yn+15, zn+15), Color.red));
-		// 				chunks.get(chunks.size()-1).addVoxel(new Voxel(new Vector(xn+15, yn+15, zn+15), Color.red));
-		// 			}
-		// 			catch(Exception e){ System.out.println(e); }
-		// 		}
-		// 	}
-		// }
-		chunks.add(new Chunk(new Vector(-2, 0, 0)));
-		try{
-			chunks.get(0).addVoxel(new Voxel(new Vector(-2, 0, 0), Color.red)); 
-			chunks.get(0).addVoxel(new Voxel(new Vector(-1, 0, 0), Color.red));
-			chunks.get(0).addVoxel(new Voxel(new Vector(0, 0, 0), Color.red));
-			chunks.get(0).addVoxel(new Voxel(new Vector(1, 0, 0), Color.red));
-			chunks.get(0).addVoxel(new Voxel(new Vector(2, 0, 0), Color.red));
-			chunks.get(0).addVoxel(new Voxel(new Vector(3, 0, 0), Color.red));
-			// chunks.get(0).addVoxel(new Voxel(new Vector(4, 4, 4), Color.red));
-			// chunks.get(0).addVoxel(new Voxel(new Vector(6, 4, 4), Color.red));
-			// chunks.get(0).addVoxel(new Voxel(new Vector(4, 6, 4), Color.red));
-			// chunks.get(0).addVoxel(new Voxel(new Vector(4, 4, 6), Color.red));
-			// chunks.get(0).addVoxel(new Voxel(new Vector(2, 4, 4), Color.red));
-			// chunks.get(0).addVoxel(new Voxel(new Vector(4, 2, 4), Color.red));
-			// chunks.get(0).addVoxel(new Voxel(new Vector(4, 4, 2), Color.red));
+		chunks.add(new Chunk(new Vector(0, 0, 0)));
+		for (int x = 0; x < 16; x++){
+			for (int y = 0; y < 16; y++){
+				for (int z = 0; z < 16; z++){
+					try{ chunks.get(0).addVoxel(new Voxel(new Vector(x, y, z), Color.red)); }
+					catch(Exception e){ System.out.println(e); }
+				}
+			}
 		}
-		catch(Exception e){ System.out.println(e); }
+		// chunks.add(new Chunk(new Vector(0, -4, 0)));
+		// try{
+		// 	chunks.get(0).addVoxel(new Voxel(new Vector(0, -1, 0), Color.red));
+		// 	chunks.get(0).addVoxel(new Voxel(new Vector(0, 0, 0), Color.red));
+		// 	chunks.get(0).addVoxel(new Voxel(new Vector(0, 1, 0), Color.red));
+		// }
+		// catch(Exception e){ System.out.println(e); }
 
 		this.update();
 	}
@@ -147,7 +125,7 @@ public class World extends JPanel{
 					catch(Exception e){ System.out.println(e); }
 				}
 		}
-
+		
 		return null;
 	}
 

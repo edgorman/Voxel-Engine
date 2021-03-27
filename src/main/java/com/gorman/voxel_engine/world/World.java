@@ -42,6 +42,7 @@ public class World extends JPanel{
 
 	// Debug information
 	public double fps;
+	public double frames;
 	
 	public World(){
 		super();
@@ -114,6 +115,9 @@ public class World extends JPanel{
 			
 		// Draw Player UI
 		this.player.drawUI(g, this);
+
+		// Update frames
+		this.frames++;
 	}
 
 	public Voxel getVoxel(Vector p){
@@ -169,32 +173,31 @@ public class World extends JPanel{
 	}
 
 	public void run(){
-		double checkFPS = 0;
-		double maxFPS = 1000;
+		double maxFPS = 60;
 		double lastFPSCheck = 0;
 		double lastRefresh = 0;
 
 		while(true){
-			long timeSLU = (long) (System.currentTimeMillis() - lastRefresh); 
+			long delta = (long) (System.currentTimeMillis() - lastRefresh); 
+			lastRefresh = System.currentTimeMillis();
 
-			checkFPS++;
-			if(checkFPS >= 100){
-				this.fps = checkFPS/((System.currentTimeMillis() - lastFPSCheck)/1000.0);
-				lastFPSCheck = System.currentTimeMillis();
-				checkFPS = 0;
+			lastFPSCheck += delta;
+			if(lastFPSCheck >= 1000){
+				this.fps = this.frames;
+				lastFPSCheck = 0;
+				this.frames = 0;
 			}
 			
-			if(timeSLU < 1000.0/maxFPS){
+			if(delta < 1000.0/maxFPS){
 				try {
-					Thread.sleep((long) (1000.0/maxFPS - timeSLU));
+					Thread.sleep((long) (1000.0/maxFPS - delta));
 				} catch (InterruptedException e) {
 					e.printStackTrace();
 				}	
 			}
 
-			this.update();
 			this.repaint();
-			lastRefresh = System.currentTimeMillis();
+			this.update();
 		}
 	}
 	

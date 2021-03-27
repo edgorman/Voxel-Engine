@@ -38,7 +38,7 @@ public class Player{
 	public Polygon polygonMouseOver;
 
 	public Player(Vector vf){
-		this.movementSpeed = 0.1;
+		this.movementSpeed = 0.25;
 		this.horzLookSpeed = 900;
 		this.vertLookSpeed = 2200;
 		this.horzLook = 0;

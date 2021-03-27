@@ -44,7 +44,7 @@ public class Polygon implements Comparable<Polygon>{
 	
 	public void update(Player player){
 		this.draw = true;
-		this.normal = new Plane(this).normal;
+		this.normal = new Plane(this).normal.normalise();
 		this.projectX = new int[this.vertexes.length];
 		this.projectY = new int[this.vertexes.length];
 

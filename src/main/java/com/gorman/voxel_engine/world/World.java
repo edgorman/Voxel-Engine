@@ -15,6 +15,8 @@ import javax.swing.JPanel;
 
 import com.gorman.voxel_engine.player.Player;
 import com.gorman.voxel_engine.window.Window;
+import com.gorman.voxel_engine.world.terrain.FlatTerrain;
+import com.gorman.voxel_engine.world.terrain.Terrain;
 
 /**
  * The World object handles the following:
@@ -31,11 +33,14 @@ public class World extends JPanel{
 	
 	private static final long serialVersionUID = 1L;
 
-	public ArrayList<Chunk> chunks = new ArrayList<Chunk>();
-	static Vector lightVector = new Vector(0, 0, -1);
-
+	public long seed;
+	public Terrain terrain;
+	public ArrayList<Chunk> chunks;
+	
+	public int totalObjects = 0;
 	public boolean renderOutline = true;
 	public boolean renderNormal = false;
+	static Vector lightVector = new Vector(0, 0, -1);
 	public ArrayList<Polygon> renderObjects = new ArrayList<Polygon>();
 
 	public Player player;
@@ -43,36 +48,36 @@ public class World extends JPanel{
 	// Debug information
 	public double fps;
 	
-	public World(){
+	public World(long s){
 		super();
 		this.setSize(Window.screenSizeX, Window.screenSizeY);
 		this.setFocusable(true);
 		this.hideMouse();
 		
 		// Init player objects
-		this.player = new Player(new Vector(0, 0, 0));
+		this.player = new Player(new Vector(8, 8, 2));
 		this.addKeyListener(this.player.input);
 		this.addMouseListener(this.player.input);
 		this.addMouseMotionListener(this.player.input);
 		this.addMouseWheelListener(this.player.input);
 		
 		// Init world objects
-		chunks.add(new Chunk(new Vector(0, 0, 0)));
-		for (int x = 0; x < 16; x++){
-			for (int y = 0; y < 16; y++){
-				for (int z = 0; z < 16; z++){
-					try{ chunks.get(0).addVoxel(new Voxel(new Vector(x, y, z), Color.red)); }
-					catch(Exception e){ System.out.println(e); }
-				}
+		this.seed = s;
+		this.terrain = new FlatTerrain(s);
+		this.chunks = new ArrayList<Chunk>();
+		for (int x = -2; x < 2; x++){
+			for (int y = -2; y < 2; y++){
+				this.chunks.add(
+					this.terrain.getChunk(
+						new Vector(
+							x * Chunk.size, 
+							y * Chunk.size, 
+							0 * Chunk.size
+						)
+					)
+				);
 			}
 		}
-		// chunks.add(new Chunk(new Vector(0, -4, 0)));
-		// try{
-		// 	chunks.get(0).addVoxel(new Voxel(new Vector(0, -1, 0), Color.red));
-		// 	chunks.get(0).addVoxel(new Voxel(new Vector(0, 0, 0), Color.red));
-		// 	chunks.get(0).addVoxel(new Voxel(new Vector(0, 1, 0), Color.red));
-		// }
-		// catch(Exception e){ System.out.println(e); }
 
 		this.update();
 	}

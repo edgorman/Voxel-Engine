@@ -6,7 +6,7 @@ import com.gorman.voxel_engine.world.World;
 public class Main{
 	public static void main(String[] args) throws InterruptedException
 	{
-		World world = new World();
+		World world = new World(0);
 		Window window = new Window("Voxel Terrain Generator");
         window.add(world);
 		world.run();

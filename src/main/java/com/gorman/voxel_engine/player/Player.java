@@ -42,7 +42,7 @@ public class Player{
 		this.horzLookSpeed = 900;
 		this.vertLookSpeed = 2200;
 		this.horzLook = 0;
-		this.vertLook = 0;
+		this.vertLook = -0.2;
 		this.zoom = 1000;
 		this.minZoom = 500;
 		this.maxZoom = 2500;

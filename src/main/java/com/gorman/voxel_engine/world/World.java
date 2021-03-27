@@ -78,6 +78,9 @@ public class World extends JPanel{
 				}
 			}
 		}
+		// chunks.add(new Chunk(new Vector(0, 0, 0)));
+		// try{ chunks.get(0).addVoxel(new Voxel(new Vector(0, 0, 0), 2, Color.red));	}
+		// catch(Exception e){ System.out.println(e); }
 
 		this.update();
 	}
@@ -134,7 +137,7 @@ public class World extends JPanel{
 						continue;
 
 					// If the player and polygon face same direction
-					if (p.normal.dotProduct(this.player.viewTo.subtract(this.player.viewFrom).inverse()) >= 0)
+					if (p.normal.dotProduct(p.getCentre().subtract(this.player.viewFrom).inverse()) >= 0)
 						continue;
 
 					// TODO: Ignore sides which border another solid block

@@ -56,7 +56,7 @@ public class World extends JPanel{
 		this.hideMouse();
 		
 		// Init player objects
-		this.player = new Player(new Vector(8, 8, 4));
+		this.player = new Player(new Vector(8, 8, 10));
 		this.addKeyListener(this.player.input);
 		this.addMouseListener(this.player.input);
 		this.addMouseMotionListener(this.player.input);
@@ -66,8 +66,8 @@ public class World extends JPanel{
 		this.seed = s;
 		this.terrain = new FlatTerrain(s);
 		this.chunks = new ArrayList<Chunk>();
-		for (int x = 0; x < 1; x++){
-			for (int y = 0; y < 1; y++){
+		for (int x = -2; x < 2; x++){
+			for (int y = -2; y < 2; y++){
 				for (int z = 0; z < 1; z++){
 					this.chunks.add(
 						this.terrain.getChunk(
@@ -146,22 +146,10 @@ public class World extends JPanel{
 		for (Chunk c : this.chunks){
 			for (Voxel v : c.getVoxelList()){
 				for (Polygon p : v.faces){
-					p.update(this.player);
-
-					// If the polygon is outside screen bounds
-					if (!p.draw)
-						continue;
-
-					// If the player and polygon face same direction
-					if (p.normal.dotProduct(this.player.viewFrom.subtract(p.getCentre())) >= 0)
-						continue;
-
-					// If polygon is facing another block
-					if (this.getVoxel(v.position.add(p.normal.inverse())) != null)
-						continue;
-
-					// If here, object must be renderable
-					this.renderObjects.add(p);
+					// If polygon should be rendered
+					if (p.update(this.player))
+						if (this.getVoxel(v.position.add(p.normal.inverse())) == null)
+							this.renderObjects.add(p);
 				}
 			}
 		}
@@ -172,7 +160,7 @@ public class World extends JPanel{
 
 		for (int i = this.renderObjects.size() - 1; i >= 0; i--){
 			Polygon p = this.renderObjects.get(i);
-			if (p.mouseOver() && p.draw && p.visible){
+			if (p.mouseOver()){
 				this.player.polygonMouseOver = p;
 				break;
 			}

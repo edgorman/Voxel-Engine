@@ -27,10 +27,7 @@ public class Polygon implements Comparable<Polygon>{
 	public double lighting = 1;
 
 	public double distance;
-
-	public boolean draw = true;
-	public boolean visible = true;
-	public boolean seeThrough = false;
+	public boolean seeThrough;
 	
 	public Polygon(double[] x, double[] y,  double[] z, Color c, boolean s){	
 		this.vertexes = new Vector[x.length];
@@ -42,22 +39,28 @@ public class Polygon implements Comparable<Polygon>{
 		this.seeThrough = s; 
 	}
 	
-	public void update(Player player){
-		this.draw = true;
+	public boolean update(Player player){
 		this.normal = new Plane(this).normal.normalise();
+
+		// If the player and polygon face same direction
+		if (this.normal.dotProduct(player.viewFrom.subtract(this.vertexes[0])) >= 0)	// this.getCentre()
+			return false;
+
+		// Calculate points in projected space
 		this.projectX = new int[this.vertexes.length];
 		this.projectY = new int[this.vertexes.length];
-
 		for (int i=0; i<this.vertexes.length; i++){
 			Vector project = this.vertexes[i].project(player);
+
+			if (project.z < 0)
+				return false;
+
 			this.projectX[i] = (int) ((Window.screenSizeX/2 - player.viewFocus.x) + project.x * player.zoom);
 			this.projectY[i] = (int) ((Window.screenSizeY/2 - player.viewFocus.y) + project.y * player.zoom);
-			if (project.z < 0)
-				this.draw = false;
 		}
 		
 		// Calculate polygon lighting
-		double angle = Math.acos(World.lightVector.multiply(this.normal.normalise()).sum() / World.lightVector.length());
+		double angle = Math.acos(World.lightVector.multiply(this.normal).sum() / World.lightVector.length());
 		this.lighting = 0.2 + 1 - Math.sqrt(Math.toDegrees(angle)/180);
 		this.lighting = Math.min(Math.max(this.lighting, 0), 1);
 
@@ -72,6 +75,8 @@ public class Polygon implements Comparable<Polygon>{
 		for(Vector v : this.vertexes)
 			total += player.viewFrom.distance(v);
 		this.distance = total / this.vertexes.length;
+
+		return true;
 	}
 
 	public Vector getCentre(){
@@ -82,33 +87,30 @@ public class Polygon implements Comparable<Polygon>{
 	}
 	
 	public void drawPolygon(Graphics g, World w, Player p){
-		if(this.draw && this.visible){
-			if (!this.seeThrough){
-				g.setColor(
-					new Color(
-						(int)(this.color.getRed() * lighting), 
-						(int)(this.color.getGreen() * lighting), 
-						(int)(this.color.getBlue() * lighting)
-					)
-				);
-				g.fillPolygon(this.projectX, this.projectY, this.projectX.length);
-				// System.out.println(this.normal);
-			}
+		if (!this.seeThrough){
+			g.setColor(
+				new Color(
+					(int)(this.color.getRed() * lighting), 
+					(int)(this.color.getGreen() * lighting), 
+					(int)(this.color.getBlue() * lighting)
+				)
+			);
+			g.fillPolygon(this.projectX, this.projectY, this.projectX.length);
+		}
 
-			if (p.polygonMouseOver == this){
-				g.setColor(new Color(255, 255, 255, 100));
-				g.fillPolygon(this.projectX, this.projectY, this.projectX.length);
-			}
-			
-			if (w.renderOutline){
-				g.setColor(new Color(0, 0, 0));
-				g.drawPolygon(this.projectX, this.projectY, this.projectX.length);
-			}
+		if (p.polygonMouseOver == this){
+			g.setColor(new Color(255, 255, 255, 100));
+			g.fillPolygon(this.projectX, this.projectY, this.projectX.length);
+		}
+		
+		if (w.renderOutline){
+			g.setColor(new Color(0, 0, 0));
+			g.drawPolygon(this.projectX, this.projectY, this.projectX.length);
+		}
 
-			if(w.renderNormal){
-				g.setColor(new Color(0, 0, 0));
-				g.drawLine(this.projectCX, this.projectCY, this.projectNX, this.projectNY);
-			}
+		if(w.renderNormal){
+			g.setColor(new Color(0, 0, 0));
+			g.drawLine(this.projectCX, this.projectCY, this.projectNX, this.projectNY);
 		}
 	}
 

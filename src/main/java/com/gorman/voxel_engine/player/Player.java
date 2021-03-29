@@ -4,9 +4,11 @@ import java.awt.Color;
 import java.awt.Graphics;
 
 import com.gorman.voxel_engine.window.Window;
+import com.gorman.voxel_engine.world.Chunk;
 import com.gorman.voxel_engine.world.Plane;
 import com.gorman.voxel_engine.world.Polygon;
 import com.gorman.voxel_engine.world.Vector;
+import com.gorman.voxel_engine.world.Voxel;
 import com.gorman.voxel_engine.world.World;
 
 /**
@@ -52,6 +54,14 @@ public class Player{
 		this.viewTo = new Vector(0, 0, 0);
 		this.input = new Listener(this);
 		this.polygonMouseOver = null;
+	}
+
+	public Vector getChunk(){
+		return new Vector(
+			this.viewFrom.x / (double) (Chunk.size * Voxel.length),
+			this.viewFrom.y / (double) (Chunk.size * Voxel.length),
+			this.viewFrom.z / (double) (Chunk.size * Voxel.length)
+		);
 	}
 
 	public void processMouse(){

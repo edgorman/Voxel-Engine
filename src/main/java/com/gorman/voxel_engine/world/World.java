@@ -36,6 +36,7 @@ public class World extends JPanel{
 	public long seed;
 	public Terrain terrain;
 	public ArrayList<Chunk> chunks;
+	public int chunkRange;
 	
 	public int totalObjects = 0;
 	public boolean renderOutline = true;
@@ -56,7 +57,7 @@ public class World extends JPanel{
 		this.hideMouse();
 		
 		// Init player objects
-		this.player = new Player(new Vector(8, 8, 10));
+		this.player = new Player(new Vector(0, 0, 10));
 		this.addKeyListener(this.player.input);
 		this.addMouseListener(this.player.input);
 		this.addMouseMotionListener(this.player.input);
@@ -66,21 +67,7 @@ public class World extends JPanel{
 		this.seed = s;
 		this.terrain = new FlatTerrain(s);
 		this.chunks = new ArrayList<Chunk>();
-		for (int x = -2; x < 2; x++){
-			for (int y = -2; y < 2; y++){
-				for (int z = 0; z < 1; z++){
-					this.chunks.add(
-						this.terrain.getChunk(
-							new Vector(
-								x * Chunk.size, 
-								y * Chunk.size, 
-								z * Chunk.size
-							)
-						)
-					);
-				}
-			}
-		}
+		this.chunkRange = 0;
 
 		this.update();
 	}
@@ -99,9 +86,13 @@ public class World extends JPanel{
 
 	// World methods --------------------
 	public void update(){
+		// Calculate world chunks
+		this.setUpdateChunks();
 	}
 
 	public void paint(Graphics g){
+		// this.setUpdateChunks();
+		
 		// Clear screen and draw background
 		super.paint(g);
 		g.setColor(new Color(140, 180, 180));
@@ -138,6 +129,29 @@ public class World extends JPanel{
 		}
 		
 		return null;
+	}
+
+	public void setUpdateChunks(){
+		ArrayList<Chunk> chunks = new ArrayList<Chunk>();
+
+		Vector pc = this.player.getChunk();
+		for (int x = (int) pc.x - 1 - this.chunkRange; x < pc.x + 1 + this.chunkRange; x++){
+			for (int y = (int) pc.y - 1 - this.chunkRange; y < pc.y + 1 + this.chunkRange; y++){
+				for (int z = 0; z < 8; z++){
+					chunks.add(
+						this.terrain.getChunk(
+							new Vector(
+								(double) x * Chunk.size, 
+								(double) y * Chunk.size, 
+								(double) z * Chunk.size
+							)
+						)
+					);
+				}
+			}
+		}
+
+		this.chunks = chunks;
 	}
 
 	public void setRenderObjects(){

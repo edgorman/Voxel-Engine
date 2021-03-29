@@ -8,10 +8,11 @@ import java.awt.Color;
  * @author Edward Gorman
  */
 public class Voxel {
+	public static double length = 2;
+	
 	public Vector position;
 	public Vector ps;
 	public double rotation;
-	static double length = 2;
 	public Color color;
 	public Polygon[] faces;
 	

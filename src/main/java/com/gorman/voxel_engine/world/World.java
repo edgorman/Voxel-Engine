@@ -15,6 +15,8 @@ import javax.swing.JPanel;
 
 import com.gorman.voxel_engine.player.Player;
 import com.gorman.voxel_engine.window.Window;
+import com.gorman.voxel_engine.world.terrain.FlatTerrain;
+import com.gorman.voxel_engine.world.terrain.Terrain;
 
 /**
  * The World object handles the following:
@@ -31,32 +33,54 @@ public class World extends JPanel{
 	
 	private static final long serialVersionUID = 1L;
 
-	public ArrayList<Chunk> chunks = new ArrayList<Chunk>();
-	static Vector lightVector = new Vector(0, 0, -1);
-
+	public long seed;
+	public Terrain terrain;
+	public ArrayList<Chunk> chunks;
+	
+	public int totalObjects = 0;
 	public boolean renderOutline = true;
 	public boolean renderNormal = false;
+	static Vector lightVector = new Vector(0, 0, -1);
 	public ArrayList<Polygon> renderObjects = new ArrayList<Polygon>();
 
 	public Player player;
 
 	// Debug information
 	public double fps;
+	public double frames;
 	
-	public World(){
+	public World(long s){
 		super();
 		this.setSize(Window.screenSizeX, Window.screenSizeY);
 		this.setFocusable(true);
 		this.hideMouse();
 		
 		// Init player objects
-		this.player = new Player(new Vector(0, 0, 0));
+		this.player = new Player(new Vector(8, 8, 10));
 		this.addKeyListener(this.player.input);
 		this.addMouseListener(this.player.input);
 		this.addMouseMotionListener(this.player.input);
 		this.addMouseWheelListener(this.player.input);
 		
 		// Init world objects
+		this.seed = s;
+		this.terrain = new FlatTerrain(s);
+		this.chunks = new ArrayList<Chunk>();
+		for (int x = -2; x < 2; x++){
+			for (int y = -2; y < 2; y++){
+				for (int z = 0; z < 1; z++){
+					this.chunks.add(
+						this.terrain.getChunk(
+							new Vector(
+								x * Chunk.size, 
+								y * Chunk.size, 
+								z * Chunk.size
+							)
+						)
+					);
+				}
+			}
+		}
 
 		this.update();
 	}
@@ -98,6 +122,9 @@ public class World extends JPanel{
 			
 		// Draw Player UI
 		this.player.drawUI(g, this);
+
+		// Update frames
+		this.frames++;
 	}
 
 	public Voxel getVoxel(Vector p){
@@ -119,22 +146,10 @@ public class World extends JPanel{
 		for (Chunk c : this.chunks){
 			for (Voxel v : c.getVoxelList()){
 				for (Polygon p : v.faces){
-					p.update(this.player);
-
-					// If the polygon is outside screen bounds
-					if (!p.draw)
-						continue;
-
-					// If the player and polygon face same direction
-					if (p.normal.dotProduct(this.player.viewFrom.subtract(p.getCentre())) >= 0)
-						continue;
-
-					// If polygon is facing another block
-					if (this.getVoxel(v.position.add(p.normal.inverse())) != null)
-						continue;
-
-					// If here, object must be renderable
-					this.renderObjects.add(p);
+					// If polygon should be rendered
+					if (p.update(this.player))
+						if (this.getVoxel(v.position.add(p.normal.inverse())) == null)
+							this.renderObjects.add(p);
 				}
 			}
 		}
@@ -145,7 +160,7 @@ public class World extends JPanel{
 
 		for (int i = this.renderObjects.size() - 1; i >= 0; i--){
 			Polygon p = this.renderObjects.get(i);
-			if (p.mouseOver() && p.draw && p.visible){
+			if (p.mouseOver()){
 				this.player.polygonMouseOver = p;
 				break;
 			}
@@ -153,32 +168,31 @@ public class World extends JPanel{
 	}
 
 	public void run(){
-		double checkFPS = 0;
-		double maxFPS = 1000;
+		double maxFPS = 60;
 		double lastFPSCheck = 0;
 		double lastRefresh = 0;
 
 		while(true){
-			long timeSLU = (long) (System.currentTimeMillis() - lastRefresh); 
+			long delta = (long) (System.currentTimeMillis() - lastRefresh); 
+			lastRefresh = System.currentTimeMillis();
 
-			checkFPS++;
-			if(checkFPS >= 100){
-				this.fps = checkFPS/((System.currentTimeMillis() - lastFPSCheck)/1000.0);
-				lastFPSCheck = System.currentTimeMillis();
-				checkFPS = 0;
+			lastFPSCheck += delta;
+			if(lastFPSCheck >= 1000){
+				this.fps = this.frames;
+				lastFPSCheck = 0;
+				this.frames = 0;
 			}
 			
-			if(timeSLU < 1000.0/maxFPS){
+			if(delta < 1000.0/maxFPS){
 				try {
-					Thread.sleep((long) (1000.0/maxFPS - timeSLU));
+					Thread.sleep((long) (1000.0/maxFPS - delta));
 				} catch (InterruptedException e) {
 					e.printStackTrace();
 				}	
 			}
 
-			this.update();
 			this.repaint();
-			lastRefresh = System.currentTimeMillis();
+			this.update();
 		}
 	}
 	

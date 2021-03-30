@@ -57,22 +57,6 @@ public class World extends JPanel{
 		this.addMouseWheelListener(this.player.input);
 		
 		// Init world objects
-		chunks.add(new Chunk(new Vector(0, 0, 0)));
-		for (int x = 0; x < 16; x++){
-			for (int y = 0; y < 16; y++){
-				for (int z = 0; z < 16; z++){
-					try{ chunks.get(0).addVoxel(new Voxel(new Vector(x, y, z), Color.red)); }
-					catch(Exception e){ System.out.println(e); }
-				}
-			}
-		}
-		// chunks.add(new Chunk(new Vector(0, -4, 0)));
-		// try{
-		// 	chunks.get(0).addVoxel(new Voxel(new Vector(0, -1, 0), Color.red));
-		// 	chunks.get(0).addVoxel(new Voxel(new Vector(0, 0, 0), Color.red));
-		// 	chunks.get(0).addVoxel(new Voxel(new Vector(0, 1, 0), Color.red));
-		// }
-		// catch(Exception e){ System.out.println(e); }
 
 		this.update();
 	}

@@ -136,8 +136,8 @@ public class World extends JPanel{
 		ArrayList<Chunk> chunks = new ArrayList<Chunk>();
 
 		Vector pc = this.player.getChunk();
-		for (int x = ((int) pc.x) - this.chunkRange; x < ((int) pc.x) + this.chunkRange; x++){
-			for (int y = ((int) pc.y) - this.chunkRange; y < ((int) pc.y) + this.chunkRange; y++){
+		for (int x = ((int) Math.floor(pc.x)) - this.chunkRange; x < ((int) Math.floor(pc.x)) + this.chunkRange + 1; x++){
+			for (int y = ((int) Math.floor(pc.y)) - this.chunkRange; y < ((int) Math.floor(pc.y)) + this.chunkRange + 1; y++){
 				for (int z = 0; z < World.chunkZMax; z++){
 					chunks.add(
 						this.terrain.getChunk(

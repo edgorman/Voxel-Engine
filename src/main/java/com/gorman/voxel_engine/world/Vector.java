@@ -106,14 +106,6 @@ public class Vector {
         );
     }
 
-    public Vector scale(Vector s){
-        return new Vector(
-            this.x * s.x,
-            this.y * s.y,
-            this.z * s.z
-        );
-    }
-
     public double sum(){
         return this.x + this.y + this.z;
     }
@@ -121,7 +113,7 @@ public class Vector {
     // Advanced vector methods --------------------
     public Vector normalise(){
         if(this.length() > 0)
-            return this.scale(1 / this.length());
+            return this.scale(1.0d / this.length());
         return this;
     }
 

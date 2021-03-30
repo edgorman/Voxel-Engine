@@ -37,6 +37,7 @@ public class World extends JPanel{
 	public Terrain terrain;
 	public ArrayList<Chunk> chunks;
 	public int chunkRange;
+	public static int chunkZMax = 8;
 	
 	public int totalObjects = 0;
 	public boolean renderOutline = true;
@@ -67,7 +68,7 @@ public class World extends JPanel{
 		this.seed = s;
 		this.terrain = new FlatTerrain(s);
 		this.chunks = new ArrayList<Chunk>();
-		this.chunkRange = 0;
+		this.chunkRange = 1;
 
 		this.update();
 	}
@@ -135,9 +136,9 @@ public class World extends JPanel{
 		ArrayList<Chunk> chunks = new ArrayList<Chunk>();
 
 		Vector pc = this.player.getChunk();
-		for (int x = (int) pc.x - 1 - this.chunkRange; x < (int) pc.x + 1 + this.chunkRange; x++){
-			for (int y = (int) pc.y - 1 - this.chunkRange; y < (int) pc.y + 1 + this.chunkRange; y++){
-				for (int z = 0; z < 8; z++){
+		for (int x = ((int) pc.x) - this.chunkRange; x < ((int) pc.x) + this.chunkRange; x++){
+			for (int y = ((int) pc.y) - this.chunkRange; y < ((int) pc.y) + this.chunkRange; y++){
+				for (int z = 0; z < World.chunkZMax; z++){
 					chunks.add(
 						this.terrain.getChunk(
 							new Vector(

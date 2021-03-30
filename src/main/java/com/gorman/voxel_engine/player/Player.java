@@ -156,14 +156,15 @@ public class Player{
 			g.setColor(Color.black);
 			g.drawString("Voxel Terrain - v0.1", 10, 20);
 			g.drawString("FPS: " + (int) w.fps, 10, 40);
-			g.drawString("XYZ: " + this.viewFrom, 10, 60);
-			g.drawString("Look: " + this.viewTo.subtract(this.viewFrom), 10, 80);
-			g.drawString("Zoom: " + this.zoom, 10, 100);
+			g.drawString("xyz: " + this.viewFrom, 10, 60);
+			g.drawString("XYZ: " + this.getChunk(), 10, 80);
+			g.drawString("Look: " + this.viewTo.subtract(this.viewFrom), 10, 100);
+			g.drawString("Zoom: " + this.zoom, 10, 120);
 			
-			g.drawString("Objects loaded: ", 10, 140);
-			g.drawString(" Chunks: " + w.chunks.size(), 10, 160);
-			g.drawString(" Voxels: " + "?", 10, 180);
-			g.drawString(" Polygons: " + w.renderObjects.size() + "," + w.renderObjects.size(), 10, 200);
+			g.drawString("Objects loaded: ", 10, 160);
+			g.drawString(" Chunks: " + w.chunks.size() / World.chunkZMax, 10, 180);
+			g.drawString(" Voxels: " + "?", 10, 200);
+			g.drawString(" Polygons: " + w.renderObjects.size() + "," + w.renderObjects.size(), 10, 220);
 		}
 	}
 }

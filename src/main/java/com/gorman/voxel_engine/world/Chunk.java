@@ -9,10 +9,11 @@ import java.util.ArrayList;
  */
 public class Chunk {
     
+    public static int size = 16;
+
     public Vector position;
     public Voxel[][][] array;
     public ArrayList<Voxel> list;
-    public static int size = 16;
 
     public Chunk(Vector p){
         this.position = p;
@@ -21,9 +22,9 @@ public class Chunk {
     }
 
     public boolean contains(Vector v){
-        if (v.x < 0 || v.x >= 16 ||
-            v.y < 0 || v.y >= 16 ||
-            v.z < 0 || v.z >= 16)
+        if (v.x < 0 || v.x >= Chunk.size ||
+            v.y < 0 || v.y >= Chunk.size ||
+            v.z < 0 || v.z >= Chunk.size)
                 return false;
         return true;
     }
@@ -34,7 +35,7 @@ public class Chunk {
         if (this.contains(q))
             return this.array[(int) q.x][(int) q.y][(int) q.z];
         else
-            throw new Exception("Error: Voxel is not accessible from this chunk: " + q);
+            throw new Exception("Error: Voxel " + p + " is not accessible from this chunk: " + this.position);
     }
 
     public ArrayList<Voxel> getVoxelList(){
@@ -44,7 +45,7 @@ public class Chunk {
     public void addVoxel(Voxel v) throws Exception{
         Vector w = v.position.subtract(this.position);
 
-        if (this.getVoxel(w) == null){
+        if (this.getVoxel(v.position) == null){
             this.array[(int) w.x][(int) w.y][(int) w.z] = v;
             this.list.add(v);
         }
@@ -55,7 +56,7 @@ public class Chunk {
     public void removeVoxel(Voxel v) throws Exception{
         Vector w = v.position.subtract(this.position);
 
-        if (this.getVoxel(w) != null){
+        if (this.getVoxel(v.position) != null){
             this.array[(int) w.x][(int) w.y][(int) w.z] = null;
             this.list.remove(v);
         }

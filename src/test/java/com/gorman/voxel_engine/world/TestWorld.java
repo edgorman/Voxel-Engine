@@ -13,14 +13,14 @@ public class TestWorld
 
     @Test
     public void checkObjectInstantiation(){
-        World w = new World();
+        World w = new World(0);
 
         assertNotNull(w);
     }
 
     @Test
     public void checkGetVoxel() throws Exception{
-        World w = new World();
+        World w = new World(0);
         w.chunks = new ArrayList<Chunk>();
         
         w.chunks.add(new Chunk(new Vector(0, 0, 0)));

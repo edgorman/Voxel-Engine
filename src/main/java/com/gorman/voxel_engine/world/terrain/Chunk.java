@@ -1,6 +1,9 @@
-package com.gorman.voxel_engine.world;
+package com.gorman.voxel_engine.world.terrain;
 
 import java.util.ArrayList;
+
+import com.gorman.voxel_engine.world.primitives.Vector;
+import com.gorman.voxel_engine.world.primitives.Voxel;
 
 /**
  * The Chunk object represents a section of the voxel terrain.

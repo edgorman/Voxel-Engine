@@ -1,7 +1,6 @@
 package com.gorman.voxel_engine.world.terrain;
 
-import com.gorman.voxel_engine.world.Chunk;
-import com.gorman.voxel_engine.world.Vector;
+import com.gorman.voxel_engine.world.primitives.Vector;
 
 public abstract class Terrain {
 

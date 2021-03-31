@@ -4,12 +4,12 @@ import java.awt.Color;
 import java.awt.Graphics;
 
 import com.gorman.voxel_engine.window.Window;
-import com.gorman.voxel_engine.world.Chunk;
-import com.gorman.voxel_engine.world.Plane;
-import com.gorman.voxel_engine.world.Polygon;
-import com.gorman.voxel_engine.world.Vector;
-import com.gorman.voxel_engine.world.Voxel;
 import com.gorman.voxel_engine.world.World;
+import com.gorman.voxel_engine.world.primitives.Plane;
+import com.gorman.voxel_engine.world.primitives.Polygon;
+import com.gorman.voxel_engine.world.primitives.Vector;
+import com.gorman.voxel_engine.world.primitives.Voxel;
+import com.gorman.voxel_engine.world.terrain.Chunk;
 
 /**
  * The Player object represents the player in the game world.

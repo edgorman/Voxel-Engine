@@ -1,4 +1,4 @@
-package com.gorman.voxel_engine.world;
+package com.gorman.voxel_engine.world.primitives;
 
 import com.gorman.voxel_engine.player.Player;
 

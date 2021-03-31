@@ -15,6 +15,10 @@ import javax.swing.JPanel;
 
 import com.gorman.voxel_engine.player.Player;
 import com.gorman.voxel_engine.window.Window;
+import com.gorman.voxel_engine.world.primitives.Polygon;
+import com.gorman.voxel_engine.world.primitives.Vector;
+import com.gorman.voxel_engine.world.primitives.Voxel;
+import com.gorman.voxel_engine.world.terrain.Chunk;
 import com.gorman.voxel_engine.world.terrain.FlatTerrain;
 import com.gorman.voxel_engine.world.terrain.Terrain;
 
@@ -42,7 +46,7 @@ public class World extends JPanel{
 	public int totalObjects = 0;
 	public boolean renderOutline = true;
 	public boolean renderNormal = false;
-	static Vector lightVector = new Vector(0, 0, -1);
+	public static Vector lightVector = new Vector(0, 0, -1);
 	public ArrayList<Polygon> renderObjects = new ArrayList<Polygon>();
 
 	public Player player;

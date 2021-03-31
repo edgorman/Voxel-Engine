@@ -1,4 +1,4 @@
-package com.gorman.voxel_engine.world;
+package com.gorman.voxel_engine.world.primitives;
 
 import java.awt.Color;
 import java.awt.Graphics;
@@ -6,6 +6,7 @@ import java.util.Arrays;
 
 import com.gorman.voxel_engine.player.Player;
 import com.gorman.voxel_engine.window.Window;
+import com.gorman.voxel_engine.world.World;
 
 /**
  * The Polygon3D object represents a polygon in 3D space.

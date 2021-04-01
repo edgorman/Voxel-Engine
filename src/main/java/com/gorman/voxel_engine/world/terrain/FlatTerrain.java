@@ -1,9 +1,8 @@
 package com.gorman.voxel_engine.world.terrain;
 
-import java.awt.Color;
-
 import com.gorman.voxel_engine.world.primitives.Vector;
-import com.gorman.voxel_engine.world.voxels.Voxel;
+import com.gorman.voxel_engine.world.voxels.Grass;
+import com.gorman.voxel_engine.world.voxels.Stone;
 
 public class FlatTerrain extends Terrain {
 
@@ -19,11 +18,11 @@ public class FlatTerrain extends Terrain {
             for (double x = p.x; x < p.x + Chunk.size; x++){
                 for (double y = p.y; y < p.y + Chunk.size; y++){
                     try {
-                        c.addVoxel(new Voxel(new Vector(x, y, 0), Color.GRAY));
-                        c.addVoxel(new Voxel(new Vector(x, y, 1), Color.GRAY));
-                        c.addVoxel(new Voxel(new Vector(x, y, 2), Color.GRAY));
+                        c.addVoxel(new Stone(new Vector(x, y, 0)));
+                        c.addVoxel(new Stone(new Vector(x, y, 1)));
+                        c.addVoxel(new Stone(new Vector(x, y, 2)));
 
-                        c.addVoxel(new Voxel(new Vector(x, y, 3), Color.GREEN));
+                        c.addVoxel(new Grass(new Vector(x, y, 3)));
                     } 
                     catch (Exception e) { e.printStackTrace(); }
                 }

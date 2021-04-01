@@ -14,12 +14,12 @@ public class TestVoxel
     @Test
     public void checkObjectInstantiation(){
         Vector u = new Vector(0, 0, 0);
-        Voxel v = new Voxel(u, Color.RED);
+        Voxel v = new Stone(u);
 
         assertEquals(u.x, v.position.x, 0);
         assertEquals(u.y, v.position.y, 0);
         assertEquals(u.z, v.position.z, 0);
-        assertEquals(Color.RED, v.color);
+        assertEquals(Color.GRAY, v.color);
         assertEquals(6, v.faces.length, 0);
     }
 

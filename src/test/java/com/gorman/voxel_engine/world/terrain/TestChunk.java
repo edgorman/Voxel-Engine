@@ -7,9 +7,8 @@ import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 
-import java.awt.Color;
-
 import com.gorman.voxel_engine.world.primitives.Vector;
+import com.gorman.voxel_engine.world.voxels.Stone;
 import com.gorman.voxel_engine.world.voxels.Voxel;
 
 import org.junit.Test;
@@ -46,7 +45,7 @@ public class TestChunk
         Chunk c = new Chunk(new Vector(0, 0, 0));
 
         Vector u = new Vector(0, 0, 0);
-        Voxel v = new Voxel(u, Color.RED);
+        Voxel v = new Stone(u);
 
         try {
             c.addVoxel(v);
@@ -63,7 +62,7 @@ public class TestChunk
         Chunk c = new Chunk(new Vector(0, 0, 0));
 
         Vector u = new Vector(-1, 2, 3);
-        Voxel v = new Voxel(u, Color.RED);
+        Voxel v = new Stone(u);
 
         try {
             c.addVoxel(v);
@@ -77,7 +76,7 @@ public class TestChunk
         Chunk c = new Chunk(new Vector(0, 0, 0));
 
         Vector u = new Vector(0, 0, 0);
-        Voxel v = new Voxel(u, Color.RED);
+        Voxel v = new Stone(u);
 
         try {
             c.addVoxel(v);
@@ -97,7 +96,7 @@ public class TestChunk
         Chunk c = new Chunk(new Vector(0, 0, 0));
 
         Vector u = new Vector(0, 0, 0);
-        Voxel v = new Voxel(u, Color.RED);
+        Voxel v = new Stone(u);
 
         try {
             c.removeVoxel(v);

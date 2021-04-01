@@ -17,10 +17,10 @@ import com.gorman.voxel_engine.player.Player;
 import com.gorman.voxel_engine.window.Window;
 import com.gorman.voxel_engine.world.primitives.Polygon;
 import com.gorman.voxel_engine.world.primitives.Vector;
-import com.gorman.voxel_engine.world.primitives.Voxel;
 import com.gorman.voxel_engine.world.terrain.Chunk;
 import com.gorman.voxel_engine.world.terrain.FlatTerrain;
 import com.gorman.voxel_engine.world.terrain.Terrain;
+import com.gorman.voxel_engine.world.voxels.Voxel;
 
 /**
  * The World object handles the following:

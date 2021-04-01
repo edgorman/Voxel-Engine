@@ -1,6 +1,9 @@
-package com.gorman.voxel_engine.world.primitives;
+package com.gorman.voxel_engine.world.voxels;
 
 import java.awt.Color;
+
+import com.gorman.voxel_engine.world.primitives.Polygon;
+import com.gorman.voxel_engine.world.primitives.Vector;
 
 /**
  * The Voxel object represents a cube in 3D space.

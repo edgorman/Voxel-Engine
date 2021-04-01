@@ -8,8 +8,8 @@ import com.gorman.voxel_engine.world.World;
 import com.gorman.voxel_engine.world.primitives.Plane;
 import com.gorman.voxel_engine.world.primitives.Polygon;
 import com.gorman.voxel_engine.world.primitives.Vector;
-import com.gorman.voxel_engine.world.primitives.Voxel;
 import com.gorman.voxel_engine.world.terrain.Chunk;
+import com.gorman.voxel_engine.world.voxels.Voxel;
 
 /**
  * The Player object represents the player in the game world.

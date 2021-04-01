@@ -3,7 +3,7 @@ package com.gorman.voxel_engine.world.terrain;
 import java.awt.Color;
 
 import com.gorman.voxel_engine.world.primitives.Vector;
-import com.gorman.voxel_engine.world.primitives.Voxel;
+import com.gorman.voxel_engine.world.voxels.Voxel;
 
 public class FlatTerrain extends Terrain {
 

@@ -1,18 +1,18 @@
 package com.gorman.voxel_engine.world.terrain;
 
-import static org.junit.Assert.fail;
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
-
-import org.junit.Test;
+import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.fail;
 
 import java.awt.Color;
 
 import com.gorman.voxel_engine.world.primitives.Vector;
-import com.gorman.voxel_engine.world.primitives.Voxel;
+import com.gorman.voxel_engine.world.voxels.Voxel;
+
+import org.junit.Test;
 
 public class TestChunk
 {

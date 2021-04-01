@@ -1,10 +1,12 @@
-package com.gorman.voxel_engine.world.primitives;
+package com.gorman.voxel_engine.world.voxels;
 
 import static org.junit.Assert.assertEquals;
 
 import org.junit.Test;
 
 import java.awt.Color;
+
+import com.gorman.voxel_engine.world.primitives.Vector;
 
 public class TestVoxel
 {

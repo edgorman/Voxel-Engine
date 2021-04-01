@@ -1,18 +1,17 @@
 package com.gorman.voxel_engine.world.terrain;
 
-import static org.junit.Assert.fail;
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
-
-import org.junit.Test;
-
-import java.awt.Color;
+import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.fail;
 
 import com.gorman.voxel_engine.world.primitives.Vector;
-import com.gorman.voxel_engine.world.primitives.Voxel;
+import com.gorman.voxel_engine.world.voxels.Stone;
+import com.gorman.voxel_engine.world.voxels.Voxel;
+
+import org.junit.Test;
 
 public class TestChunk
 {
@@ -46,7 +45,7 @@ public class TestChunk
         Chunk c = new Chunk(new Vector(0, 0, 0));
 
         Vector u = new Vector(0, 0, 0);
-        Voxel v = new Voxel(u, Color.RED);
+        Voxel v = new Stone(u);
 
         try {
             c.addVoxel(v);
@@ -63,7 +62,7 @@ public class TestChunk
         Chunk c = new Chunk(new Vector(0, 0, 0));
 
         Vector u = new Vector(-1, 2, 3);
-        Voxel v = new Voxel(u, Color.RED);
+        Voxel v = new Stone(u);
 
         try {
             c.addVoxel(v);
@@ -77,7 +76,7 @@ public class TestChunk
         Chunk c = new Chunk(new Vector(0, 0, 0));
 
         Vector u = new Vector(0, 0, 0);
-        Voxel v = new Voxel(u, Color.RED);
+        Voxel v = new Stone(u);
 
         try {
             c.addVoxel(v);
@@ -97,7 +96,7 @@ public class TestChunk
         Chunk c = new Chunk(new Vector(0, 0, 0));
 
         Vector u = new Vector(0, 0, 0);
-        Voxel v = new Voxel(u, Color.RED);
+        Voxel v = new Stone(u);
 
         try {
             c.removeVoxel(v);

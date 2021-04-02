@@ -11,7 +11,7 @@ public class FlatTerrain extends Terrain {
     }
 
     @Override
-    public Chunk getChunk(Vector p) {
+    public Chunk createChunk(Vector p) {
         Chunk c = new Chunk(p);
 
         if (p.z == 0){

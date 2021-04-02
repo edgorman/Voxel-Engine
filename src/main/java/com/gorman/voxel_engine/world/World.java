@@ -18,6 +18,7 @@ import com.gorman.voxel_engine.window.Window;
 import com.gorman.voxel_engine.world.primitives.Polygon;
 import com.gorman.voxel_engine.world.primitives.Vector;
 import com.gorman.voxel_engine.world.terrain.Chunk;
+import com.gorman.voxel_engine.world.terrain.ChunkManager;
 import com.gorman.voxel_engine.world.terrain.FlatTerrain;
 import com.gorman.voxel_engine.world.terrain.Terrain;
 import com.gorman.voxel_engine.world.voxels.Voxel;
@@ -40,8 +41,7 @@ public class World extends JPanel{
 	public long seed;
 	public Terrain terrain;
 	public ArrayList<Chunk> chunks;
-	public int chunkRange;
-	public static int chunkZMax = 8;
+	public ChunkManager chunkManager;
 	
 	public int totalObjects = 0;
 	public boolean renderOutline = true;
@@ -50,11 +50,12 @@ public class World extends JPanel{
 	public ArrayList<Polygon> renderObjects = new ArrayList<Polygon>();
 
 	public Player player;
+	public Vector lastPlayerChunk;
 
 	// Debug information
 	public double fps;
 	public double frames;
-	
+
 	public World(long s){
 		super();
 		this.setSize(Window.screenSizeX, Window.screenSizeY);
@@ -72,7 +73,7 @@ public class World extends JPanel{
 		this.seed = s;
 		this.terrain = new FlatTerrain(s);
 		this.chunks = new ArrayList<Chunk>();
-		this.chunkRange = 1;
+		this.chunkManager = new ChunkManager(this.terrain, 2);
 
 		this.update();
 	}
@@ -92,12 +93,16 @@ public class World extends JPanel{
 	// World methods --------------------
 	public void update(){
 		// Calculate world chunks
-		this.setUpdateChunks();
+		// if (this.lastPlayerChunk != null)
+			// System.out.println(this.player.getChunk().z + "-" + this.lastPlayerChunk.z + " = " + this.player.getChunk().equals(this.lastPlayerChunk));
+	
+		if (!this.player.getChunk().equals(this.lastPlayerChunk)){
+			this.chunks = chunkManager.getChunks(this.player.getChunk());
+			this.lastPlayerChunk = this.player.getChunk();
+		}
 	}
 
 	public void paint(Graphics g){
-		// this.setUpdateChunks();
-		
 		// Clear screen and draw background
 		super.paint(g);
 		g.setColor(new Color(140, 180, 180));
@@ -134,29 +139,6 @@ public class World extends JPanel{
 		}
 		
 		return null;
-	}
-
-	public void setUpdateChunks(){
-		ArrayList<Chunk> chunks = new ArrayList<Chunk>();
-
-		Vector pc = this.player.getChunk();
-		for (int x = ((int) Math.floor(pc.x)) - this.chunkRange; x < ((int) Math.floor(pc.x)) + this.chunkRange + 1; x++){
-			for (int y = ((int) Math.floor(pc.y)) - this.chunkRange; y < ((int) Math.floor(pc.y)) + this.chunkRange + 1; y++){
-				for (int z = 0; z < World.chunkZMax; z++){
-					chunks.add(
-						this.terrain.getChunk(
-							new Vector(
-								(double) x * Chunk.size, 
-								(double) y * Chunk.size, 
-								(double) z * Chunk.size
-							)
-						)
-					);
-				}
-			}
-		}
-
-		this.chunks = chunks;
 	}
 
 	public void setRenderObjects(){

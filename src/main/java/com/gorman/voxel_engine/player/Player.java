@@ -9,6 +9,7 @@ import com.gorman.voxel_engine.world.primitives.Plane;
 import com.gorman.voxel_engine.world.primitives.Polygon;
 import com.gorman.voxel_engine.world.primitives.Vector;
 import com.gorman.voxel_engine.world.terrain.Chunk;
+import com.gorman.voxel_engine.world.terrain.ChunkManager;
 import com.gorman.voxel_engine.world.voxels.Voxel;
 
 /**
@@ -58,9 +59,9 @@ public class Player{
 
 	public Vector getChunk(){
 		return new Vector(
-			this.viewFrom.x / (double) (Chunk.size * Voxel.length),
-			this.viewFrom.y / (double) (Chunk.size * Voxel.length),
-			this.viewFrom.z / (double) (Chunk.size * Voxel.length)
+			Math.floor(this.viewFrom.x / (double) (Chunk.size * Voxel.length)),
+			Math.floor(this.viewFrom.y / (double) (Chunk.size * Voxel.length)),
+			Math.floor(this.viewFrom.z / (double) (Chunk.size * Voxel.length))
 		);
 	}
 
@@ -162,7 +163,7 @@ public class Player{
 			g.drawString("Zoom: " + this.zoom, 10, 120);
 			
 			g.drawString("Objects loaded: ", 10, 160);
-			g.drawString(" Chunks: " + w.chunks.size() / World.chunkZMax, 10, 180);
+			g.drawString(" Chunks: " + w.chunks.size() / ChunkManager.maxZ, 10, 180);
 			g.drawString(" Voxels: " + "?", 10, 200);
 			g.drawString(" Polygons: " + w.renderObjects.size() + "," + w.renderObjects.size(), 10, 220);
 		}

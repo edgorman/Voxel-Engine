@@ -10,6 +10,6 @@ public abstract class Terrain {
         this.seed = s;
     };
     
-    public abstract Chunk getChunk(Vector p);
+    public abstract Chunk createChunk(Vector p);
 
 }

@@ -19,7 +19,6 @@ import com.gorman.voxel_engine.world.primitives.Polygon;
 import com.gorman.voxel_engine.world.primitives.Vector;
 import com.gorman.voxel_engine.world.terrain.Chunk;
 import com.gorman.voxel_engine.world.terrain.ChunkManager;
-import com.gorman.voxel_engine.world.terrain.DebugTerrain;
 import com.gorman.voxel_engine.world.terrain.FlatTerrain;
 import com.gorman.voxel_engine.world.voxels.Voxel;
 

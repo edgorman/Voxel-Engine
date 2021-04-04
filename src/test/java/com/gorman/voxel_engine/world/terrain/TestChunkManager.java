@@ -4,7 +4,6 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 
 import com.gorman.voxel_engine.world.primitives.Vector;
-import com.gorman.voxel_engine.world.voxels.Voxel;
 
 import org.junit.Test;
 

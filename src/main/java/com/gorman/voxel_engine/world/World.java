@@ -19,8 +19,8 @@ import com.gorman.voxel_engine.world.primitives.Polygon;
 import com.gorman.voxel_engine.world.primitives.Vector;
 import com.gorman.voxel_engine.world.terrain.Chunk;
 import com.gorman.voxel_engine.world.terrain.ChunkManager;
+import com.gorman.voxel_engine.world.terrain.DebugTerrain;
 import com.gorman.voxel_engine.world.terrain.FlatTerrain;
-import com.gorman.voxel_engine.world.terrain.Terrain;
 import com.gorman.voxel_engine.world.voxels.Voxel;
 
 /**
@@ -39,11 +39,9 @@ public class World extends JPanel{
 	private static final long serialVersionUID = 1L;
 
 	public long seed;
-	public Terrain terrain;
-	public ArrayList<Chunk> chunks;
-	public ChunkManager chunkManager;
+	public ChunkManager chunks;
 	
-	public int totalObjects = 0;
+	public int totalPolygons = 0;
 	public boolean renderOutline = true;
 	public boolean renderNormal = false;
 	public static Vector lightVector = new Vector(0, 0, -1);
@@ -71,10 +69,7 @@ public class World extends JPanel{
 		
 		// Init world objects
 		this.seed = s;
-		this.terrain = new FlatTerrain(s);
-		this.chunks = new ArrayList<Chunk>();
-		this.chunkManager = new ChunkManager(this.terrain, 2);
-
+		this.chunks = new ChunkManager(new FlatTerrain(s, 8), 1);
 		this.update();
 	}
 
@@ -92,13 +87,11 @@ public class World extends JPanel{
 
 	// World methods --------------------
 	public void update(){
-		// Calculate world chunks
-		// if (this.lastPlayerChunk != null)
-			// System.out.println(this.player.getChunk().z + "-" + this.lastPlayerChunk.z + " = " + this.player.getChunk().equals(this.lastPlayerChunk));
-	
-		if (!this.player.getChunk().equals(this.lastPlayerChunk)){
-			this.chunks = chunkManager.getChunks(this.player.getChunk());
-			this.lastPlayerChunk = this.player.getChunk();
+		// Update world chunks
+		Vector pc = this.chunks.getChunkVector(this.player.viewFrom).scale(1/Voxel.length);
+		if (!pc.equals(this.lastPlayerChunk)){
+			this.chunks.getChunks(pc);
+			this.lastPlayerChunk = pc;
 		}
 	}
 
@@ -128,29 +121,24 @@ public class World extends JPanel{
 		this.frames++;
 	}
 
-	public Voxel getVoxel(Vector p){
-		for (Chunk c : this.chunks){
-			if (c.position.x <= p.x && c.position.x + Chunk.size > p.x &&
-				c.position.y <= p.y && c.position.y + Chunk.size > p.y &&
-				c.position.z <= p.z && c.position.z + Chunk.size > p.z){
-					try{ return c.getVoxel(p); }
-					catch(Exception e){ System.out.println(e); }
-				}
-		}
-		
-		return null;
-	}
-
 	public void setRenderObjects(){
+		this.totalPolygons = 0;
 		this.renderObjects = new ArrayList<Polygon>();
 
-		for (Chunk c : this.chunks){
-			for (Voxel v : c.getVoxelList()){
-				for (Polygon p : v.faces){
+		for (int i = 0; i < this.chunks.loaded.size(); i++){
+			Chunk c = this.chunks.loaded.get(i);
+			for (int j = 0; j < c.getVoxelList().size(); j++){
+				Voxel v = c.getVoxelList().get(j);
+				for (int k = 0; k < v.faces.length; k++){
+
+					Polygon p = v.faces[k];
+					this.totalPolygons++;
+
 					// If polygon should be rendered
 					if (p.update(this.player))
-						if (this.getVoxel(v.position.add(p.normal.inverse())) == null)
+						if (this.chunks.getVoxel(v.position.add(p.normal.inverse())) == null)
 							this.renderObjects.add(p);
+
 				}
 			}
 		}

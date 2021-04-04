@@ -4,48 +4,71 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 import com.gorman.voxel_engine.world.primitives.Vector;
+import com.gorman.voxel_engine.world.voxels.Voxel;
 
 public class ChunkManager {
     
     public Terrain terrain;
     public int radius;
-    public static int maxZ = 8;
 
-    public HashMap<Vector, Chunk> chunkMap;
+    public ArrayList<Chunk> loaded;
+    public HashMap<Vector, Chunk> map;
 
     public ChunkManager(Terrain t, int r){
         this.terrain = t;
         this.radius = r;
 
-        this.chunkMap = new HashMap<Vector, Chunk>();
+        this.map = new HashMap<Vector, Chunk>();
     }
 
-    public ArrayList<Chunk> getChunks(Vector p){
-        ArrayList<Chunk> chunks = new ArrayList<Chunk>();
+    public Voxel getVoxel(Vector p){
+        Vector q = this.getChunkVector(p);
+        Chunk c = this.map.get(q);
+        if (c == null){
+            c = this.terrain.createChunk(q);
+            this.map.put(q, c);
+        }
+        
+        try { return c.getVoxel(p); } 
+        catch (Exception e) { return null; }
+    }
 
-        for (int x = ((int) Math.floor(p.x)) - this.radius; x < ((int) Math.floor(p.x)) + this.radius + 1; x++){
-			for (int y = ((int) Math.floor(p.y)) - this.radius; y < ((int) Math.floor(p.y)) + this.radius + 1; y++){
-				for (int z = 0; z < ChunkManager.maxZ; z++){
+    public Vector getChunkVector(Vector p){
+        double s = Chunk.size;
+        return new Vector(
+            s * Math.floor(p.x/s),
+            s * Math.floor(p.y/s),
+            s * Math.floor(p.z/s)
+        );
+    }
 
-                    Vector q = new Vector(
-                        (double) x * Chunk.size, 
-                        (double) y * Chunk.size, 
-                        (double) z * Chunk.size
-                    );
-                    
-                    if (this.chunkMap.get(q) == null){
-                        Chunk c = this.terrain.createChunk(q);
-                        chunks.add(c);
-                        this.chunkMap.put(q, c);
+    public void getChunks(Vector p){
+        this.loaded = new ArrayList<Chunk>();
+        Vector pc = this.getChunkVector(p);
+
+        for (int x = -this.radius; x <= this.radius; x++){
+			for (int y = -this.radius; y <= this.radius; y++){
+                // Use modified manhatten distance rendering strategy
+                if (Math.abs(x) + Math.abs(y) - 1 <= this.radius){
+                    for (int z = 0; z < this.terrain.maxZ; z++){
+
+                        Vector q = new Vector(
+                            pc.x + (double) x * Chunk.size, 
+                            pc.y + (double) y * Chunk.size, 
+                            (double) z * Chunk.size
+                        );
+                        Chunk c = this.map.get(q);
+
+                        if (c == null){
+                            c = this.terrain.createChunk(q);
+                            this.map.put(q, c);
+                        }
+                        this.loaded.add(c);
+
                     }
-                    else
-                        chunks.add(this.chunkMap.get(q));
-
                 }
             }
         }
-
-        return chunks;
     }
 
 }

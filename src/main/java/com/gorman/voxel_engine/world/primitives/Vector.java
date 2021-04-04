@@ -42,12 +42,18 @@ public class Vector {
 
     @Override
     public boolean equals(Object o) { 
-        if (o == this) return true; 
+        if (o == null) return false;
+        // if (o == this) return true; 
+
         if (!(o instanceof Vector)) return false; 
-        
         Vector v = (Vector) o; 
         return this.x == v.x && this.y == v.y && this.z == v.z;
-    } 
+    }
+
+    @Override
+    public int hashCode() {
+        return this.toString().hashCode();
+    }
 
     // Basic vector methods --------------------
     public Vector add(Vector v){

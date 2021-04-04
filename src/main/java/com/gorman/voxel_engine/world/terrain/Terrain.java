@@ -5,11 +5,13 @@ import com.gorman.voxel_engine.world.primitives.Vector;
 public abstract class Terrain {
 
     public long seed;
+    public int maxZ;
 
-    public Terrain(long s){
+    public Terrain(long s, int m){
         this.seed = s;
+        this.maxZ = m;
     };
     
-    public abstract Chunk getChunk(Vector p);
+    public abstract Chunk createChunk(Vector p);
 
 }

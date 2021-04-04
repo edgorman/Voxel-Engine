@@ -8,7 +8,6 @@ import com.gorman.voxel_engine.world.World;
 import com.gorman.voxel_engine.world.primitives.Plane;
 import com.gorman.voxel_engine.world.primitives.Polygon;
 import com.gorman.voxel_engine.world.primitives.Vector;
-import com.gorman.voxel_engine.world.terrain.Chunk;
 import com.gorman.voxel_engine.world.voxels.Voxel;
 
 /**
@@ -54,14 +53,6 @@ public class Player{
 		this.viewTo = new Vector(0, 0, 0);
 		this.input = new Listener(this);
 		this.polygonMouseOver = null;
-	}
-
-	public Vector getChunk(){
-		return new Vector(
-			this.viewFrom.x / (double) (Chunk.size * Voxel.length),
-			this.viewFrom.y / (double) (Chunk.size * Voxel.length),
-			this.viewFrom.z / (double) (Chunk.size * Voxel.length)
-		);
 	}
 
 	public void processMouse(){
@@ -156,15 +147,14 @@ public class Player{
 			g.setColor(Color.black);
 			g.drawString("Voxel Terrain - v0.1", 10, 20);
 			g.drawString("FPS: " + (int) w.fps, 10, 40);
-			g.drawString("xyz: " + this.viewFrom, 10, 60);
-			g.drawString("XYZ: " + this.getChunk(), 10, 80);
-			g.drawString("Look: " + this.viewTo.subtract(this.viewFrom), 10, 100);
-			g.drawString("Zoom: " + this.zoom, 10, 120);
+			g.drawString("xyz: " + this.viewFrom.scale(1/Voxel.length), 10, 60);
+			g.drawString("Look: " + this.viewTo.subtract(this.viewFrom), 10, 80);
+			g.drawString("Zoom: " + this.zoom, 10, 100);
 			
 			g.drawString("Objects loaded: ", 10, 160);
-			g.drawString(" Chunks: " + w.chunks.size() / World.chunkZMax, 10, 180);
+			g.drawString(" Chunks: " + w.chunks.map.size() / w.chunks.terrain.maxZ, 10, 180);
 			g.drawString(" Voxels: " + "?", 10, 200);
-			g.drawString(" Polygons: " + w.renderObjects.size() + "," + w.renderObjects.size(), 10, 220);
+			g.drawString(" Polygons: " + w.renderObjects.size() + "/" + w.totalPolygons, 10, 220);
 		}
 	}
 }

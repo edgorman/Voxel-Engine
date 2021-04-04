@@ -18,8 +18,8 @@ import com.gorman.voxel_engine.window.Window;
 import com.gorman.voxel_engine.world.primitives.Polygon;
 import com.gorman.voxel_engine.world.primitives.Vector;
 import com.gorman.voxel_engine.world.terrain.Chunk;
+import com.gorman.voxel_engine.world.terrain.ChunkManager;
 import com.gorman.voxel_engine.world.terrain.FlatTerrain;
-import com.gorman.voxel_engine.world.terrain.Terrain;
 import com.gorman.voxel_engine.world.voxels.Voxel;
 
 /**
@@ -38,23 +38,21 @@ public class World extends JPanel{
 	private static final long serialVersionUID = 1L;
 
 	public long seed;
-	public Terrain terrain;
-	public ArrayList<Chunk> chunks;
-	public int chunkRange;
-	public static int chunkZMax = 8;
+	public ChunkManager chunks;
 	
-	public int totalObjects = 0;
+	public int totalPolygons = 0;
 	public boolean renderOutline = true;
 	public boolean renderNormal = false;
 	public static Vector lightVector = new Vector(0, 0, -1);
 	public ArrayList<Polygon> renderObjects = new ArrayList<Polygon>();
 
 	public Player player;
+	public Vector lastPlayerChunk;
 
 	// Debug information
 	public double fps;
 	public double frames;
-	
+
 	public World(long s){
 		super();
 		this.setSize(Window.screenSizeX, Window.screenSizeY);
@@ -70,10 +68,7 @@ public class World extends JPanel{
 		
 		// Init world objects
 		this.seed = s;
-		this.terrain = new FlatTerrain(s);
-		this.chunks = new ArrayList<Chunk>();
-		this.chunkRange = 1;
-
+		this.chunks = new ChunkManager(new FlatTerrain(s, 8), 1);
 		this.update();
 	}
 
@@ -91,13 +86,15 @@ public class World extends JPanel{
 
 	// World methods --------------------
 	public void update(){
-		// Calculate world chunks
-		this.setUpdateChunks();
+		// Update world chunks
+		Vector pc = this.chunks.getChunkVector(this.player.viewFrom).scale(1/Voxel.length);
+		if (!pc.equals(this.lastPlayerChunk)){
+			this.chunks.getChunks(pc);
+			this.lastPlayerChunk = pc;
+		}
 	}
 
 	public void paint(Graphics g){
-		// this.setUpdateChunks();
-		
 		// Clear screen and draw background
 		super.paint(g);
 		g.setColor(new Color(140, 180, 180));
@@ -123,52 +120,24 @@ public class World extends JPanel{
 		this.frames++;
 	}
 
-	public Voxel getVoxel(Vector p){
-		for (Chunk c : this.chunks){
-			if (c.position.x <= p.x && c.position.x + Chunk.size > p.x &&
-				c.position.y <= p.y && c.position.y + Chunk.size > p.y &&
-				c.position.z <= p.z && c.position.z + Chunk.size > p.z){
-					try{ return c.getVoxel(p); }
-					catch(Exception e){ System.out.println(e); }
-				}
-		}
-		
-		return null;
-	}
-
-	public void setUpdateChunks(){
-		ArrayList<Chunk> chunks = new ArrayList<Chunk>();
-
-		Vector pc = this.player.getChunk();
-		for (int x = ((int) Math.floor(pc.x)) - this.chunkRange; x < ((int) Math.floor(pc.x)) + this.chunkRange + 1; x++){
-			for (int y = ((int) Math.floor(pc.y)) - this.chunkRange; y < ((int) Math.floor(pc.y)) + this.chunkRange + 1; y++){
-				for (int z = 0; z < World.chunkZMax; z++){
-					chunks.add(
-						this.terrain.getChunk(
-							new Vector(
-								(double) x * Chunk.size, 
-								(double) y * Chunk.size, 
-								(double) z * Chunk.size
-							)
-						)
-					);
-				}
-			}
-		}
-
-		this.chunks = chunks;
-	}
-
 	public void setRenderObjects(){
+		this.totalPolygons = 0;
 		this.renderObjects = new ArrayList<Polygon>();
 
-		for (Chunk c : this.chunks){
-			for (Voxel v : c.getVoxelList()){
-				for (Polygon p : v.faces){
+		for (int i = 0; i < this.chunks.loaded.size(); i++){
+			Chunk c = this.chunks.loaded.get(i);
+			for (int j = 0; j < c.getVoxelList().size(); j++){
+				Voxel v = c.getVoxelList().get(j);
+				for (int k = 0; k < v.faces.length; k++){
+
+					Polygon p = v.faces[k];
+					this.totalPolygons++;
+
 					// If polygon should be rendered
 					if (p.update(this.player))
-						if (this.getVoxel(v.position.add(p.normal.inverse())) == null)
+						if (this.chunks.getVoxel(v.position.add(p.normal.inverse())) == null)
 							this.renderObjects.add(p);
+
 				}
 			}
 		}

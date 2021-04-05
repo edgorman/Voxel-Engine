@@ -68,7 +68,7 @@ public class World extends JPanel{
 		
 		// Init world objects
 		this.seed = s;
-		this.chunks = new ChunkManager(new NormalTerrain(s, 8), 2);
+		this.chunks = new ChunkManager(new NormalTerrain(s, 8), 5);
 		this.update();
 	}
 

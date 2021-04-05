@@ -20,8 +20,8 @@ public class NormalTerrain extends Terrain{
 
         for (double x = p.x; x < p.x + Chunk.size; x++){
             for (double y = p.y; y < p.y + Chunk.size; y++){
-                double zd = this.noise.noise(x, y, 0);
-                int zi = (int) (((2d - 0d) * (zd - -1d) / (1d - -1d)) + 0d);
+                double zd = this.noise.noise(x*0.01, y*0.01, 0);
+                int zi = (int) ((((Chunk.size * this.maxZ / 2) - 0d) * (zd - -1d) / (1d - -1d)) + 0d);
 
                 if (zi < p.z || zi >= p.z + Chunk.size)
                     continue;

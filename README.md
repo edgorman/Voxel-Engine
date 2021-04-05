@@ -1,8 +1,10 @@
 # Voxel-Engine
 
-A 3D rendering engine built in Java without any dependencies. Implements a rasterization approach.
+A 3D rendering engine built in Java without any dependencies. Implements a rasterization approach. Currently developing procedural terrain generation to accompany this to demonstrate its abilities.
 
 [![Maven CI](https://github.com/edgorman/Voxel-Engine/actions/workflows/maven.yml/badge.svg)](https://github.com/edgorman/Voxel-Engine/actions/workflows/maven.yml)
+
+![Example of terrain generation from early an build](docs/images/early-terrain-example.png)
 
 ## Installation
 Use the following command to clone the repository:

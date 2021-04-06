@@ -26,12 +26,12 @@ public abstract class Voxel {
 		this.color = c;
 
 		this.faces = new Polygon[6];
-		this.faces[0] = new Polygon(new double[]{ps.x, ps.x+length, ps.x+length, ps.x}, new double[]{ps.y, ps.y, ps.y+length, ps.y+length},  new double[]{ps.z, ps.z, ps.z, ps.z}, c, false);
-		this.faces[1] = new Polygon(new double[]{ps.x, ps.x+length, ps.x+length, ps.x}, new double[]{ps.y, ps.y, ps.y+length, ps.y+length},  new double[]{ps.z+length, ps.z+length, ps.z+length, ps.z+length}, c, false);
-		this.faces[2] = new Polygon(new double[]{ps.x, ps.x, ps.x+length, ps.x+length}, new double[]{ps.y, ps.y, ps.y, ps.y},  new double[]{ps.z, ps.z+length, ps.z+length, ps.z}, c, false);
-		this.faces[3] = new Polygon(new double[]{ps.x+length, ps.x+length, ps.x+length, ps.x+length}, new double[]{ps.y, ps.y, ps.y+length, ps.y+length},  new double[]{ps.z, ps.z+length, ps.z+length, ps.z}, c, false);
-		this.faces[4] = new Polygon(new double[]{ps.x, ps.x, ps.x+length, ps.x+length}, new double[]{ps.y+length, ps.y+length, ps.y+length, ps.y+length},  new double[]{ps.z, ps.z+length, ps.z+length, ps.z}, c, false);
-		this.faces[5] = new Polygon(new double[]{ps.x, ps.x, ps.x, ps.x}, new double[]{ps.y, ps.y, ps.y+length, ps.y+length},  new double[]{ps.z, ps.z+length, ps.z+length, ps.z}, c, false);
+		this.faces[0] = new Polygon(new double[]{ps.x, ps.x+length, ps.x+length, ps.x}, new double[]{ps.y, ps.y, ps.y+length, ps.y+length},  new double[]{ps.z, ps.z, ps.z, ps.z}, c);
+		this.faces[1] = new Polygon(new double[]{ps.x, ps.x+length, ps.x+length, ps.x}, new double[]{ps.y, ps.y, ps.y+length, ps.y+length},  new double[]{ps.z+length, ps.z+length, ps.z+length, ps.z+length}, c);
+		this.faces[2] = new Polygon(new double[]{ps.x, ps.x, ps.x+length, ps.x+length}, new double[]{ps.y, ps.y, ps.y, ps.y},  new double[]{ps.z, ps.z+length, ps.z+length, ps.z}, c);
+		this.faces[3] = new Polygon(new double[]{ps.x+length, ps.x+length, ps.x+length, ps.x+length}, new double[]{ps.y, ps.y, ps.y+length, ps.y+length},  new double[]{ps.z, ps.z+length, ps.z+length, ps.z}, c);
+		this.faces[4] = new Polygon(new double[]{ps.x, ps.x, ps.x+length, ps.x+length}, new double[]{ps.y+length, ps.y+length, ps.y+length, ps.y+length},  new double[]{ps.z, ps.z+length, ps.z+length, ps.z}, c);
+		this.faces[5] = new Polygon(new double[]{ps.x, ps.x, ps.x, ps.x}, new double[]{ps.y, ps.y, ps.y+length, ps.y+length},  new double[]{ps.z, ps.z+length, ps.z+length, ps.z}, c);
 		
 		this.update();
 	}

@@ -13,8 +13,7 @@ public class TestPolygon
             new double[]{0, 0, 1, 1}, 
             new double[]{0, 0, 0, 0}, 
             new double[]{0, 1, 0, 1},
-            null,
-            false
+            null
         );
 
         assertEquals(4, p.vertexes.length, 0);
@@ -26,8 +25,7 @@ public class TestPolygon
             new double[]{0, 0, 1, 1}, 
             new double[]{0, 0, 0, 0}, 
             new double[]{0, 1, 0, 1},
-            null,
-            false
+            null
         );
 
         Vector centre = new Vector(

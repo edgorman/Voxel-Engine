@@ -67,10 +67,10 @@ public class Player{
 
 		if(this.input.leftClick)
 			if(this.polygonMouseOver != null)
-				this.polygonMouseOver.seeThrough = false;
+				this.polygonMouseOver.alpha = 0;
 		if(this.input.rightClick)
 			if(this.polygonMouseOver != null)
-				this.polygonMouseOver.seeThrough = true;
+				this.polygonMouseOver.alpha = 1;
 		
 		if(this.input.mouseScroll > 0)
 			if(this.zoom > this.minZoom)

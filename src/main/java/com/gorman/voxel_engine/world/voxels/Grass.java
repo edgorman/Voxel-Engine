@@ -7,7 +7,7 @@ import com.gorman.voxel_engine.world.primitives.Vector;
 public class Grass extends Voxel{
 
     public Grass(Vector p) {
-        super(p, Color.GREEN);
+        super(p, new Color(24, 87, 39, 255));
     }
     
 }

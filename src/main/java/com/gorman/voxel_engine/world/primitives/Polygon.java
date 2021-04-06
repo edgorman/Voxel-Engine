@@ -25,19 +25,18 @@ public class Polygon implements Comparable<Polygon>{
 	public int projectNY;
 
 	public Color color;
+	public double alpha = 255;
 	public double lighting = 1;
 
 	public double distance;
-	public boolean seeThrough;
 	
-	public Polygon(double[] x, double[] y,  double[] z, Color c, boolean s){	
+	public Polygon(double[] x, double[] y,  double[] z, Color c){	
 		this.vertexes = new Vector[x.length];
 		for (int i = 0; i < x.length; i++)
 			this.vertexes[i] = new Vector(x[i], y[i], z[i]);
 		this.normal = new Plane(this).normal.normalise();
 
 		this.color = c;
-		this.seeThrough = s; 
 	}
 	
 	public boolean update(Player player){
@@ -88,12 +87,13 @@ public class Polygon implements Comparable<Polygon>{
 	}
 	
 	public void drawPolygon(Graphics g, World w, Player p){
-		if (!this.seeThrough){
+		if (this.alpha > 0){
 			g.setColor(
 				new Color(
 					(int)(this.color.getRed() * lighting), 
 					(int)(this.color.getGreen() * lighting), 
-					(int)(this.color.getBlue() * lighting)
+					(int)(this.color.getBlue() * lighting),
+					(int)(Math.min(this.color.getAlpha(), this.alpha))
 				)
 			);
 			g.fillPolygon(this.projectX, this.projectY, this.projectX.length);

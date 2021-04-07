@@ -26,6 +26,11 @@ public class Chunk {
         this.position = p;
         this.array = new Voxel[Chunk.size][Chunk.size][Chunk.size];
         this.list = new ArrayList<Voxel>();
+        this.renderDirections = new ArrayList<Vector>();
+    }
+
+    public boolean update(Player player){
+		return this.position.project(player).z < 0;
     }
 
     public boolean contains(Vector v){
@@ -88,17 +93,10 @@ public class Chunk {
 
         // Else surrounding chunk
         Stone t = new Stone(this.getClosesetVector(player.viewFrom));
-
-        // if (this.normal.dotProduct(this.vertexes[0].subtract(player.viewFrom)) >= 0)
-		// 	return false;
-
-        for (Polygon p : t.faces){
-            if (p.normal.dotProduct(p.vertexes[0].subtract(player.viewFrom)) >= 0){
-                this.renderDirections.remove(p.normal);
-                // System.out.println("yes " + p.normal);
-            }
-        }
-        // System.out.println("---");
+        for (Polygon p : t.faces)
+            if (p.normal.dotProduct(p.vertexes[0].subtract(player.viewFrom)) >= 0)
+                this.renderDirections.add(p.normal);
+        
     }
 
 }

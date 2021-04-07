@@ -107,7 +107,7 @@ public class Player{
 		if(this.input.sprint) speed = speed * 3;
 
 		// Update view vector
-		this.viewFrom = move.normalise().scale(speed).add(this.viewFrom);
+		this.viewFrom = move.normalise().scale(speed).scale(Voxel.length).add(this.viewFrom);
 		double r = Math.sqrt(1 - (this.vertLook * this.vertLook));
 		this.viewTo = new Vector(
 			viewFrom.x + r * Math.cos(this.horzLook),

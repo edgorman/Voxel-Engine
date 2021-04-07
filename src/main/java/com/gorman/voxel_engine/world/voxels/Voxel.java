@@ -2,6 +2,7 @@ package com.gorman.voxel_engine.world.voxels;
 
 import java.awt.Color;
 
+import com.gorman.voxel_engine.player.Player;
 import com.gorman.voxel_engine.world.primitives.Polygon;
 import com.gorman.voxel_engine.world.primitives.Vector;
 
@@ -32,6 +33,10 @@ public abstract class Voxel {
 		this.faces[3] = new Polygon(new double[]{ps.x, ps.x, ps.x+length, ps.x+length}, new double[]{ps.y+length, ps.y+length, ps.y+length, ps.y+length},  new double[]{ps.z, ps.z+length, ps.z+length, ps.z}, c);
 		this.faces[4] = new Polygon(new double[]{ps.x, ps.x, ps.x, ps.x}, new double[]{ps.y, ps.y, ps.y+length, ps.y+length},  new double[]{ps.z, ps.z+length, ps.z+length, ps.z}, c);
 		this.faces[5] = new Polygon(new double[]{ps.x+length, ps.x+length, ps.x+length, ps.x+length}, new double[]{ps.y, ps.y+length, ps.y+length, ps.y},  new double[]{ps.z, ps.z, ps.z+length, ps.z+length}, c);
+	}
+
+	public boolean update(Player player){
+		return this.ps.project(player).z < 0;
 	}
 
 }

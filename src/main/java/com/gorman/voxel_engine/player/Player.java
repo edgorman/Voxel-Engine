@@ -67,10 +67,10 @@ public class Player{
 
 		if(this.input.leftClick)
 			if(this.polygonMouseOver != null)
-				this.polygonMouseOver.alpha = 0;
+				this.polygonMouseOver.alpha = 255;
 		if(this.input.rightClick)
 			if(this.polygonMouseOver != null)
-				this.polygonMouseOver.alpha = 1;
+				this.polygonMouseOver.alpha = 0;
 		
 		if(this.input.mouseScroll > 0)
 			if(this.zoom > this.minZoom)
@@ -152,8 +152,8 @@ public class Player{
 			g.drawString("Zoom: " + this.zoom, 10, 100);
 			
 			g.drawString("Objects loaded: ", 10, 160);
-			g.drawString(" Chunks: " + w.chunks.map.size() / w.chunks.terrain.maxZ, 10, 180);
-			g.drawString(" Voxels: " + "?", 10, 200);
+			g.drawString(" Chunks: " + w.totalChunks / w.chunks.terrain.maxZ, 10, 180);
+			g.drawString(" Voxels: " + w.totalVoxels, 10, 200);
 			g.drawString(" Polygons: " + w.renderObjects.size() + "/" + w.totalPolygons, 10, 220);
 		}
 	}

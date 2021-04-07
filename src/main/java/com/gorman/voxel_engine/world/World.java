@@ -40,10 +40,12 @@ public class World extends JPanel{
 	public long seed;
 	public ChunkManager chunks;
 	
+	public int totalChunks = 0;
+	public int totalVoxels = 0;
 	public int totalPolygons = 0;
 	public boolean renderOutline = true;
 	public boolean renderNormal = false;
-	public static Vector lightVector = new Vector(0, 0, -1);
+	public static Vector lightVector = new Vector(0, 0, 1);
 	public ArrayList<Polygon> renderObjects = new ArrayList<Polygon>();
 
 	public Player player;
@@ -68,7 +70,7 @@ public class World extends JPanel{
 		
 		// Init world objects
 		this.seed = s;
-		this.chunks = new ChunkManager(new NormalTerrain(s, 8), 5);
+		this.chunks = new ChunkManager(new NormalTerrain(s, 8), 3);
 		this.update();
 	}
 
@@ -121,22 +123,29 @@ public class World extends JPanel{
 	}
 
 	public void setRenderObjects(){
+		this.totalChunks = 0;
+		this.totalVoxels = 0;
 		this.totalPolygons = 0;
 		this.renderObjects = new ArrayList<Polygon>();
 
 		for (int i = 0; i < this.chunks.loaded.size(); i++){
 			Chunk c = this.chunks.loaded.get(i);
+			c.setPrederterminedInfo(this.player);
+			this.totalChunks++;
+
 			for (int j = 0; j < c.getVoxelList().size(); j++){
 				Voxel v = c.getVoxelList().get(j);
-				for (int k = 0; k < v.faces.length; k++){
+				this.totalVoxels++;
 
+				for (int k = 0; k < v.faces.length; k++){
 					Polygon p = v.faces[k];
 					this.totalPolygons++;
 
 					// If polygon should be rendered
-					if (p.update(this.player))
-						if (this.chunks.getVoxel(v.position.add(p.normal.inverse())) == null)
-							this.renderObjects.add(p);
+					if(!c.renderDirections.contains(p.normal))
+						if (p.update(this.player))
+							if (this.chunks.getVoxel(v.position.add(p.normal)) == null)
+								this.renderObjects.add(p);
 
 				}
 			}

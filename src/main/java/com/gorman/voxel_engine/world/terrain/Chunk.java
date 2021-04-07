@@ -2,7 +2,10 @@ package com.gorman.voxel_engine.world.terrain;
 
 import java.util.ArrayList;
 
+import com.gorman.voxel_engine.player.Player;
+import com.gorman.voxel_engine.world.primitives.Polygon;
 import com.gorman.voxel_engine.world.primitives.Vector;
+import com.gorman.voxel_engine.world.voxels.Stone;
 import com.gorman.voxel_engine.world.voxels.Voxel;
 
 /**
@@ -17,6 +20,7 @@ public class Chunk {
     public Vector position;
     public Voxel[][][] array;
     public ArrayList<Voxel> list;
+    public ArrayList<Vector> renderDirections;
 
     public Chunk(Vector p){
         this.position = p;
@@ -39,6 +43,14 @@ public class Chunk {
             return this.array[(int) q.x][(int) q.y][(int) q.z];
         else
             throw new Exception("Error: Voxel " + p + " is not accessible from this chunk: " + this.position);
+    }
+
+    public Vector getClosesetVector(Vector p){
+        return new Vector(
+            Math.min(Math.max(this.position.x, p.x), this.position.x + Chunk.size),
+            Math.min(Math.max(this.position.y, p.y), this.position.y + Chunk.size),
+            Math.min(Math.max(this.position.z, p.z), this.position.z + Chunk.size)
+        );
     }
 
     public ArrayList<Voxel> getVoxelList(){
@@ -66,4 +78,27 @@ public class Chunk {
         else
             throw new Exception("Error: Cannot remove voxel from position, does not contain a voxel: " + w);
     }
+
+    public void setPrederterminedInfo(Player player){
+        this.renderDirections = new ArrayList<Vector>();
+
+        // If within chunk
+        if (this.contains(player.viewFrom.scale(1/Voxel.length).subtract(this.position)))
+            return;
+
+        // Else surrounding chunk
+        Stone t = new Stone(this.getClosesetVector(player.viewFrom));
+
+        // if (this.normal.dotProduct(this.vertexes[0].subtract(player.viewFrom)) >= 0)
+		// 	return false;
+
+        for (Polygon p : t.faces){
+            if (p.normal.dotProduct(p.vertexes[0].subtract(player.viewFrom)) >= 0){
+                this.renderDirections.remove(p.normal);
+                // System.out.println("yes " + p.normal);
+            }
+        }
+        // System.out.println("---");
+    }
+
 }

@@ -43,7 +43,7 @@ public class Polygon implements Comparable<Polygon>{
 		this.normal = new Plane(this).normal.normalise();
 
 		// If the player and polygon face same direction
-		if (this.normal.dotProduct(player.viewFrom.subtract(this.vertexes[0])) >= 0)	// this.getCentre()
+		if (this.normal.dotProduct(this.vertexes[0].subtract(player.viewFrom)) >= 0)
 			return false;
 
 		// Calculate points in projected space

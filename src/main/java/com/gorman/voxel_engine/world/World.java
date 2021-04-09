@@ -70,7 +70,7 @@ public class World extends JPanel{
 		
 		// Init world objects
 		this.seed = s;
-		this.chunks = new ChunkManager(new NormalTerrain(s, 8), 3);
+		this.chunks = new ChunkManager(new NormalTerrain(s, 1), 3);
 		this.update();
 	}
 
@@ -89,7 +89,7 @@ public class World extends JPanel{
 	// World methods --------------------
 	public void update(){
 		// Update world chunks
-		Vector pc = this.chunks.getChunkVector(this.player.viewFrom).scale(1/Voxel.length);
+		Vector pc = this.chunks.getChunkVector(this.player.viewFrom);
 		if (!pc.equals(this.lastPlayerChunk)){
 			this.chunks.getChunks(pc);
 			this.lastPlayerChunk = pc;
@@ -131,18 +131,21 @@ public class World extends JPanel{
 		for (int i = 0; i < this.chunks.loaded.size(); i++){
 			Chunk c = this.chunks.loaded.get(i);
 			c.setPrederterminedInfo(this.player);
+			// if (c.update(player))
+			// 		continue;
 			this.totalChunks++;
 
 			for (int j = 0; j < c.getVoxelList().size(); j++){
 				Voxel v = c.getVoxelList().get(j);
+				// if (v.update(player))
+				// 	continue;
 				this.totalVoxels++;
 
 				for (int k = 0; k < v.faces.length; k++){
 					Polygon p = v.faces[k];
 					this.totalPolygons++;
 
-					// If polygon should be rendered
-					if(!c.renderDirections.contains(p.normal))
+					if(c.visibleDirections.contains(p.normal))
 						if (p.update(this.player))
 							if (this.chunks.getVoxel(v.position.add(p.normal)) == null)
 								this.renderObjects.add(p);

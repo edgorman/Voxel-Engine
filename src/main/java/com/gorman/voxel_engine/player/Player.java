@@ -8,7 +8,6 @@ import com.gorman.voxel_engine.world.World;
 import com.gorman.voxel_engine.world.primitives.Plane;
 import com.gorman.voxel_engine.world.primitives.Polygon;
 import com.gorman.voxel_engine.world.primitives.Vector;
-import com.gorman.voxel_engine.world.voxels.Voxel;
 
 /**
  * The Player object represents the player in the game world.
@@ -107,7 +106,7 @@ public class Player{
 		if(this.input.sprint) speed = speed * 3;
 
 		// Update view vector
-		this.viewFrom = move.normalise().scale(speed).scale(Voxel.length).add(this.viewFrom);
+		this.viewFrom = move.normalise().scale(speed).add(this.viewFrom);
 		double r = Math.sqrt(1 - (this.vertLook * this.vertLook));
 		this.viewTo = new Vector(
 			viewFrom.x + r * Math.cos(this.horzLook),
@@ -147,7 +146,7 @@ public class Player{
 			g.setColor(Color.black);
 			g.drawString("Voxel Terrain - v0.1", 10, 20);
 			g.drawString("FPS: " + (int) w.fps, 10, 40);
-			g.drawString("xyz: " + this.viewFrom.scale(1/Voxel.length), 10, 60);
+			g.drawString("xyz: " + this.viewFrom/*.scale(1/Voxel.length)*/, 10, 60);
 			g.drawString("Look: " + this.viewTo.subtract(this.viewFrom), 10, 80);
 			g.drawString("Zoom: " + this.zoom, 10, 100);
 			

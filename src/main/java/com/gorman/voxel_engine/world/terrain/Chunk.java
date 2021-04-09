@@ -3,9 +3,7 @@ package com.gorman.voxel_engine.world.terrain;
 import java.util.ArrayList;
 
 import com.gorman.voxel_engine.player.Player;
-import com.gorman.voxel_engine.world.primitives.Polygon;
 import com.gorman.voxel_engine.world.primitives.Vector;
-import com.gorman.voxel_engine.world.voxels.Stone;
 import com.gorman.voxel_engine.world.voxels.Voxel;
 
 /**
@@ -20,13 +18,13 @@ public class Chunk {
     public Vector position;
     public Voxel[][][] array;
     public ArrayList<Voxel> list;
-    public ArrayList<Vector> renderDirections;
+    public ArrayList<Vector> visibleDirections;
 
     public Chunk(Vector p){
         this.position = p;
         this.array = new Voxel[Chunk.size][Chunk.size][Chunk.size];
         this.list = new ArrayList<Voxel>();
-        this.renderDirections = new ArrayList<Vector>();
+        this.visibleDirections = new ArrayList<Vector>();
     }
 
     public boolean update(Player player){
@@ -34,28 +32,25 @@ public class Chunk {
     }
 
     public boolean contains(Vector v){
-        if (v.x < 0 || v.x >= Chunk.size ||
-            v.y < 0 || v.y >= Chunk.size ||
-            v.z < 0 || v.z >= Chunk.size)
+        Vector u = v.absolute(this.position);
+
+        if (u.x < 0 || u.x >= Chunk.size ||
+            u.y < 0 || u.y >= Chunk.size ||
+            u.z < 0 || u.z >= Chunk.size ||
+            v.x < this.position.x ||
+            v.y < this.position.y ||
+            v.z < this.position.z)
                 return false;
         return true;
     }
 
     public Voxel getVoxel(Vector p) throws Exception{
-        Vector q = p.subtract(this.position);
-        
-        if (this.contains(q))
+        if (this.contains(p)){
+            Vector q = p.absolute(this.position);
             return this.array[(int) q.x][(int) q.y][(int) q.z];
+        }
         else
             throw new Exception("Error: Voxel " + p + " is not accessible from this chunk: " + this.position);
-    }
-
-    public Vector getClosesetVector(Vector p){
-        return new Vector(
-            Math.min(Math.max(this.position.x, p.x), this.position.x + Chunk.size),
-            Math.min(Math.max(this.position.y, p.y), this.position.y + Chunk.size),
-            Math.min(Math.max(this.position.z, p.z), this.position.z + Chunk.size)
-        );
     }
 
     public ArrayList<Voxel> getVoxelList(){
@@ -63,40 +58,45 @@ public class Chunk {
     }
 
     public void addVoxel(Voxel v) throws Exception{
-        Vector w = v.position.subtract(this.position);
-
         if (this.getVoxel(v.position) == null){
-            this.array[(int) w.x][(int) w.y][(int) w.z] = v;
+            Vector q = v.position.absolute(this.position);
+            this.array[(int) q.x][(int) q.y][(int) q.z] = v;
             this.list.add(v);
         }
         else
-            throw new Exception("Error: Cannot add voxel to position, contains another voxel: " + w);
+            throw new Exception("Error: Cannot add voxel to position, contains another voxel: " + v.position);
     }
 
     public void removeVoxel(Voxel v) throws Exception{
-        Vector w = v.position.subtract(this.position);
-
         if (this.getVoxel(v.position) != null){
-            this.array[(int) w.x][(int) w.y][(int) w.z] = null;
+            Vector q = v.position.absolute(this.position);
+            this.array[(int) q.x][(int) q.y][(int) q.z] = null;
             this.list.remove(v);
         }
         else
-            throw new Exception("Error: Cannot remove voxel from position, does not contain a voxel: " + w);
+            throw new Exception("Error: Cannot remove voxel from position, does not contain a voxel: " + v.position);
     }
 
     public void setPrederterminedInfo(Player player){
-        this.renderDirections = new ArrayList<Vector>();
+        this.visibleDirections = new ArrayList<Vector>();
+        this.visibleDirections.add(new Vector(-1, 0, 0));
+        this.visibleDirections.add(new Vector(1, 0, 0));
+        this.visibleDirections.add(new Vector(0, -1, 0));
+        this.visibleDirections.add(new Vector(0, 1, 0));
+        this.visibleDirections.add(new Vector(0, 0, -1));
+        this.visibleDirections.add(new Vector(0, 0, 1));
 
-        // If within chunk
-        if (this.contains(player.viewFrom.scale(1/Voxel.length).subtract(this.position)))
+        // If player in chunk
+        if (this.contains(player.viewFrom))
             return;
 
-        // Else surrounding chunk
-        Stone t = new Stone(this.getClosesetVector(player.viewFrom));
-        for (Polygon p : t.faces)
-            if (p.normal.dotProduct(p.vertexes[0].subtract(player.viewFrom)) >= 0)
-                this.renderDirections.add(p.normal);
-        
+        // Else player in surrounding chunk
+        if (player.viewFrom.x <= this.position.x) this.visibleDirections.remove(new Vector(1, 0, 0));
+        else if (player.viewFrom.x >= this.position.x + Chunk.size) this.visibleDirections.remove(new Vector(-1, 0, 0));
+        if (player.viewFrom.y <= this.position.y) this.visibleDirections.remove(new Vector(0, 1, 0));
+        else if (player.viewFrom.y >= this.position.y + Chunk.size) this.visibleDirections.remove(new Vector(0, -1, 0));
+        if (player.viewFrom.z <= this.position.z) this.visibleDirections.remove(new Vector(0, 0, 1));
+        else if (player.viewFrom.z >= this.position.z + Chunk.size) this.visibleDirections.remove(new Vector(0, 0, -1));
     }
 
 }

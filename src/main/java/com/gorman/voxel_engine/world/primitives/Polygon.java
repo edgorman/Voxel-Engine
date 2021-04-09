@@ -2,11 +2,11 @@ package com.gorman.voxel_engine.world.primitives;
 
 import java.awt.Color;
 import java.awt.Graphics;
-import java.util.Arrays;
 
 import com.gorman.voxel_engine.player.Player;
 import com.gorman.voxel_engine.window.Window;
 import com.gorman.voxel_engine.world.World;
+import com.gorman.voxel_engine.world.voxels.Voxel;
 
 /**
  * The Polygon3D object represents a polygon in 3D space.
@@ -19,10 +19,8 @@ public class Polygon implements Comparable<Polygon>{
 	public Vector normal;
 	public int[] projectX;
 	public int[] projectY;
-	public int projectCX;
-	public int projectCY;
-	public int projectNX;
-	public int projectNY;
+	public Vector projectC;
+	public Vector projectN;
 
 	public Color color;
 	public double alpha = 255;
@@ -47,10 +45,11 @@ public class Polygon implements Comparable<Polygon>{
 			return false;
 
 		// Calculate points in projected space
+		Vector project;
 		this.projectX = new int[this.vertexes.length];
 		this.projectY = new int[this.vertexes.length];
-		for (int i=0; i<this.vertexes.length; i++){
-			Vector project = this.vertexes[i].project(player);
+		for (int i = 0; i < this.vertexes.length; i++){
+			project = this.vertexes[i].project(player);
 
 			if (project.z < 0)
 				return false;
@@ -65,10 +64,18 @@ public class Polygon implements Comparable<Polygon>{
 		this.lighting = Math.min(Math.max(this.lighting, 0), 1);
 
 		// Calculate normal line from center
-		this.projectCX = (int) Arrays.stream(this.projectX).average().getAsDouble();
-		this.projectCY = (int) Arrays.stream(this.projectY).average().getAsDouble();
-		this.projectNX = this.projectCX;
-		this.projectNY = this.projectCY;
+		project = this.getCentre().project(player);
+		this.projectC = new Vector(
+			((Window.screenSizeX/2 - player.viewFocus.x) + project.x * player.zoom),
+			((Window.screenSizeY/2 - player.viewFocus.y) + project.y * player.zoom),
+			project.z
+		);
+		project = this.getCentre().add(this.normal.scale(Voxel.length / 2)).project(player);
+		this.projectN = new Vector(
+			((Window.screenSizeX/2 - player.viewFocus.x) + project.x * player.zoom),
+			((Window.screenSizeY/2 - player.viewFocus.y) + project.y * player.zoom),
+			project.z
+		);
 
 		// Calculate distance to player
 		double total = 0;
@@ -109,9 +116,11 @@ public class Polygon implements Comparable<Polygon>{
 			g.drawPolygon(this.projectX, this.projectY, this.projectX.length);
 		}
 
-		if(w.renderNormal){
-			g.setColor(new Color(0, 0, 0));
-			g.drawLine(this.projectCX, this.projectCY, this.projectNX, this.projectNY);
+		if (w.renderNormal){
+			if (this.projectN.z >= 0){
+				g.setColor(new Color(0, 0, 0));
+				g.drawLine((int) this.projectC.x, (int) this.projectC.y, (int) this.projectN.x, (int) this.projectN.y);
+			}
 		}
 	}
 

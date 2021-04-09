@@ -12,7 +12,7 @@ import com.gorman.voxel_engine.world.primitives.Vector;
  * @author Edward Gorman
  */
 public abstract class Voxel {
-	public static double length = 2;
+	public static double length = 1;
 	
 	public Vector position;
 	public Vector ps;

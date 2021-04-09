@@ -8,7 +8,6 @@ import com.gorman.voxel_engine.world.World;
 import com.gorman.voxel_engine.world.primitives.Plane;
 import com.gorman.voxel_engine.world.primitives.Polygon;
 import com.gorman.voxel_engine.world.primitives.Vector;
-import com.gorman.voxel_engine.world.voxels.Voxel;
 
 /**
  * The Player object represents the player in the game world.
@@ -67,10 +66,10 @@ public class Player{
 
 		if(this.input.leftClick)
 			if(this.polygonMouseOver != null)
-				this.polygonMouseOver.alpha = 0;
+				this.polygonMouseOver.alpha = 255;
 		if(this.input.rightClick)
 			if(this.polygonMouseOver != null)
-				this.polygonMouseOver.alpha = 1;
+				this.polygonMouseOver.alpha = 0;
 		
 		if(this.input.mouseScroll > 0)
 			if(this.zoom > this.minZoom)
@@ -147,13 +146,13 @@ public class Player{
 			g.setColor(Color.black);
 			g.drawString("Voxel Terrain - v0.1", 10, 20);
 			g.drawString("FPS: " + (int) w.fps, 10, 40);
-			g.drawString("xyz: " + this.viewFrom.scale(1/Voxel.length), 10, 60);
+			g.drawString("xyz: " + this.viewFrom/*.scale(1/Voxel.length)*/, 10, 60);
 			g.drawString("Look: " + this.viewTo.subtract(this.viewFrom), 10, 80);
 			g.drawString("Zoom: " + this.zoom, 10, 100);
 			
 			g.drawString("Objects loaded: ", 10, 160);
-			g.drawString(" Chunks: " + w.chunks.map.size() / w.chunks.terrain.maxZ, 10, 180);
-			g.drawString(" Voxels: " + "?", 10, 200);
+			g.drawString(" Chunks: " + w.totalChunks / w.chunks.terrain.maxZ, 10, 180);
+			g.drawString(" Voxels: " + w.totalVoxels, 10, 200);
 			g.drawString(" Polygons: " + w.renderObjects.size() + "/" + w.totalPolygons, 10, 220);
 		}
 	}

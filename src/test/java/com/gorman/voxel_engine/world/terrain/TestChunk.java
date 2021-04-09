@@ -34,10 +34,12 @@ public class TestChunk
         Vector u = new Vector(0, 0, 0);
         Vector v = new Vector(15, 15, 15);
         Vector w = new Vector(-1, -1, -1);
+        Vector x = new Vector(16, 16, 16);
 
         assertTrue(c.contains(u));
         assertTrue(c.contains(v));
         assertFalse(c.contains(w));
+        assertFalse(c.contains(x));
     }
 
     @Test

@@ -70,7 +70,7 @@ public class World extends JPanel{
 		
 		// Init world objects
 		this.seed = s;
-		this.chunks = new ChunkManager(new NormalTerrain(s, 1), 3);
+		this.chunks = new ChunkManager(new NormalTerrain(s, 1), 6);
 		this.update();
 	}
 
@@ -145,9 +145,9 @@ public class World extends JPanel{
 					Polygon p = v.faces[k];
 					this.totalPolygons++;
 
-					if(c.visibleDirections.contains(p.normal))
-						if (p.update(this.player))
-							if (this.chunks.getVoxel(v.position.add(p.normal)) == null)
+					if (v.neighbors[k] == null)
+						if(c.visibleDirections.contains(p.normal))
+							if (p.update(this.player))
 								this.renderObjects.add(p);
 
 				}

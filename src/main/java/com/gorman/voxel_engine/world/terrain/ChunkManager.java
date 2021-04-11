@@ -22,23 +22,19 @@ public class ChunkManager {
     }
 
     public Voxel getVoxel(Vector p){
-        Vector q = this.getChunkVector(p);
-        Chunk c = this.map.get(q);
-        if (c == null){
-            c = this.terrain.createChunk(q);
-            this.map.put(q, c);
-        }
-        
+        Chunk c = this.map.get(this.getChunkVector(p));
+
+        if (c == null)
+            return null;
         try { return c.getVoxel(p); } 
         catch (Exception e) { return null; }
     }
 
     public Vector getChunkVector(Vector p){
-        double s = Chunk.size;
         return new Vector(
-            s * Math.floor(p.x/s),
-            s * Math.floor(p.y/s),
-            s * Math.floor(p.z/s)
+            Chunk.size * Math.floor(p.x/Chunk.size),
+            Chunk.size * Math.floor(p.y/Chunk.size),
+            Chunk.size * Math.floor(p.z/Chunk.size)
         );
     }
 
@@ -48,10 +44,10 @@ public class ChunkManager {
 
         for (int x = -this.radius; x <= this.radius; x++){
 			for (int y = -this.radius; y <= this.radius; y++){
+
                 // Use modified manhatten distance rendering strategy
                 if (Math.abs(x) + Math.abs(y) - 1 <= this.radius){
                     for (int z = 0; z < this.terrain.maxZ; z++){
-
                         Vector q = new Vector(
                             pc.x + (double) x * Chunk.size, 
                             pc.y + (double) y * Chunk.size, 
@@ -59,14 +55,30 @@ public class ChunkManager {
                         );
                         Chunk c = this.map.get(q);
 
+                        // Create chunk if doesn't exist
                         if (c == null){
                             c = this.terrain.createChunk(q);
+
+                            for (Voxel u : c.getVoxelList()){
+                                for (int i = 0; i < Voxel.directions.length; i += 2){
+                                    Voxel v;
+                                    Vector r = u.position.add(Voxel.directions[i]);
+                                    try { v = c.getVoxel(r); }  
+                                    catch (Exception e) { v = this.getVoxel(r); }
+
+                                    if (v != null){
+                                        u.neighbors[i] = v;
+                                        v.neighbors[i+1] = u;
+                                    }
+                                }
+                            }
+
                             this.map.put(q, c);
                         }
                         this.loaded.add(c);
-
                     }
                 }
+                
             }
         }
     }

@@ -43,9 +43,19 @@ public class Polygon implements Comparable<Polygon>{
 		// If the player and polygon face same direction
 		if (this.normal.dotProduct(this.vertexes[0].subtract(player.viewFrom)) >= 0)
 			return false;
+		
+		
+		// Calculate centre point
+		Vector project = this.getCentre().project(player);
+		if (project.z > 0.5)
+			return false;
+		this.projectC = new Vector(
+			((Window.screenSizeX/2 - player.viewFocus.x) + project.x * player.zoom),
+			((Window.screenSizeY/2 - player.viewFocus.y) + project.y * player.zoom),
+			project.z
+		);
 
 		// Calculate points in projected space
-		Vector project;
 		this.projectX = new int[this.vertexes.length];
 		this.projectY = new int[this.vertexes.length];
 		for (int i = 0; i < this.vertexes.length; i++){
@@ -63,13 +73,7 @@ public class Polygon implements Comparable<Polygon>{
 		this.lighting = 0.2 + 1 - Math.sqrt(Math.toDegrees(angle)/180);
 		this.lighting = Math.min(Math.max(this.lighting, 0), 1);
 
-		// Calculate normal line from center
-		project = this.getCentre().project(player);
-		this.projectC = new Vector(
-			((Window.screenSizeX/2 - player.viewFocus.x) + project.x * player.zoom),
-			((Window.screenSizeY/2 - player.viewFocus.y) + project.y * player.zoom),
-			project.z
-		);
+		// Calculate normal line
 		project = this.getCentre().add(this.normal.scale(Voxel.length / 2)).project(player);
 		this.projectN = new Vector(
 			((Window.screenSizeX/2 - player.viewFocus.x) + project.x * player.zoom),

@@ -47,11 +47,11 @@ public class ChunkManager {
 
                 // Use modified manhatten distance rendering strategy
                 if (Math.abs(x) + Math.abs(y) - 1 <= this.radius){
-                    for (int z = 0; z < this.terrain.maxZ; z++){
+                    for (int z = -this.radius; z <= this.radius; z++){
                         Vector q = new Vector(
                             pc.x + (double) x * Chunk.size, 
                             pc.y + (double) y * Chunk.size, 
-                            (double) z * Chunk.size
+                            Math.max(0d, pc.z + (double) z * Chunk.size)
                         );
                         Chunk c = this.map.get(q);
 

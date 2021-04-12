@@ -20,16 +20,17 @@ public class NormalTerrain extends Terrain{
 
         for (double x = p.x; x < p.x + Chunk.size; x++){
             for (double y = p.y; y < p.y + Chunk.size; y++){
-                double zd = this.noise.noise(x*0.01, y*0.01, 0);
-                int zi = (int) ((((Chunk.size * this.maxZ / 2) - 0d) * (zd - -1d) / (1d - -1d)) + 0d);
+                double za = Chunk.size * this.maxZ / 16;
+                double zb = 0d;
+                double zc = -1d;
+                double zd = this.noise.noise(x * 0.01, y * 0.01, 0);
+                double ze = 1d;
+                int zi = 64 + (int) (((za - zb) * (zd - zc) / (ze - zc)) + zb);
 
-                if (zi < p.z || zi >= p.z + Chunk.size)
-                    continue;
-
-                try {
-                    c.addVoxel(new Stone(new Vector(x, y, zi)));
-                } 
-                catch (Exception e) { e.printStackTrace(); }
+                for (double z = p.z; z < p.z + Chunk.size && z <= zi; z++){
+                    try { c.addVoxel(new Stone(new Vector(x, y, z))); } 
+                    catch (Exception e) { e.printStackTrace(); }
+                }
             }
         }
 

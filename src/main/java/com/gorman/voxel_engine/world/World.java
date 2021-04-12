@@ -62,7 +62,7 @@ public class World extends JPanel{
 		this.hideMouse();
 		
 		// Init player objects
-		this.player = new Player(new Vector(0, 0, 10));
+		this.player = new Player(new Vector(0, 0, 70));
 		this.addKeyListener(this.player.input);
 		this.addMouseListener(this.player.input);
 		this.addMouseMotionListener(this.player.input);
@@ -70,7 +70,7 @@ public class World extends JPanel{
 		
 		// Init world objects
 		this.seed = s;
-		this.chunks = new ChunkManager(new NormalTerrain(s, 1), 6);
+		this.chunks = new ChunkManager(new NormalTerrain(s, 8), 5);
 		this.update();
 	}
 

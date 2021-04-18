@@ -25,7 +25,7 @@ mvn package
 
 Assuming no errors have been thrown, you can run the application:
 ```
-java -cp target/voxel_engine-0.1.jar com.gorman.voxel_engine.Main
+java -cp target/voxel_engine-0.2.jar com.gorman.voxel_engine.Main
 ```
 
 ## Contributing

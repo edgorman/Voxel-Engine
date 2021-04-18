@@ -43,7 +43,7 @@ public class World extends JPanel{
 	public int totalChunks = 0;
 	public int totalVoxels = 0;
 	public int totalPolygons = 0;
-	public boolean renderFill = false;
+	public boolean renderFill = true;
 	public boolean renderOutline = true;
 	public boolean renderNormal = false;
 	public static Vector lightVector = new Vector(0, 0, 1);

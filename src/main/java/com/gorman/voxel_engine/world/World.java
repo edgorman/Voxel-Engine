@@ -43,6 +43,7 @@ public class World extends JPanel{
 	public int totalChunks = 0;
 	public int totalVoxels = 0;
 	public int totalPolygons = 0;
+	public boolean renderFill = false;
 	public boolean renderOutline = true;
 	public boolean renderNormal = false;
 	public static Vector lightVector = new Vector(0, 0, 1);
@@ -70,7 +71,7 @@ public class World extends JPanel{
 		
 		// Init world objects
 		this.seed = s;
-		this.chunks = new ChunkManager(new NormalTerrain(s, 8), 5);
+		this.chunks = new ChunkManager(new NormalTerrain(s, 16), 2);
 		this.update();
 	}
 

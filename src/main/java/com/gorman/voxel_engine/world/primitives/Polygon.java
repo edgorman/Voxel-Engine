@@ -98,7 +98,7 @@ public class Polygon implements Comparable<Polygon>{
 	}
 	
 	public void drawPolygon(Graphics g, World w, Player p){
-		if (this.alpha > 0){
+		if (w.renderFill && this.alpha > 0){
 			g.setColor(
 				new Color(
 					(int)(this.color.getRed() * lighting), 

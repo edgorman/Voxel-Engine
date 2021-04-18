@@ -48,7 +48,6 @@ public class ChunkManager {
                 if (Math.abs(x) + Math.abs(y) - 1 <= this.radius){
 
                     for (int z = 0; z < this.terrain.maxZ; z++){
-                    // for (int z = -this.radius; z <= this.radius; z++){
                         Vector q = new Vector(
                             pc.x + (double) x * Chunk.size, 
                             pc.y + (double) y * Chunk.size, 
@@ -70,6 +69,16 @@ public class ChunkManager {
                                     if (v != null){
                                         u.neighbors[i] = v;
                                         v.neighbors[i+1] = u;
+                                    }
+
+                                    Voxel w;
+                                    Vector t = u.position.add(Voxel.directions[i+1]);
+                                    try { w = c.getVoxel(t); }  
+                                    catch (Exception e) { w = this.getVoxel(t); }
+
+                                    if (w != null){
+                                        u.neighbors[i+1] = w;
+                                        w.neighbors[i] = u;
                                     }
                                 }
                             }

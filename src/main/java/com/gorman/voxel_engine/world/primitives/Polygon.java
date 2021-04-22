@@ -50,8 +50,8 @@ public class Polygon implements Comparable<Polygon>{
 		if (project.z > 0.5)
 			return false;
 		this.projectC = new Vector(
-			((Window.screenSizeX/2 - player.viewFocus.x) + project.x * player.zoom),
-			((Window.screenSizeY/2 - player.viewFocus.y) + project.y * player.zoom),
+			((Window.width/2 - player.viewFocus.x) + project.x * player.zoom),
+			((Window.height/2 - player.viewFocus.y) + project.y * player.zoom),
 			project.z
 		);
 
@@ -64,8 +64,8 @@ public class Polygon implements Comparable<Polygon>{
 			if (project.z < 0)
 				return false;
 
-			this.projectX[i] = (int) ((Window.screenSizeX/2 - player.viewFocus.x) + project.x * player.zoom);
-			this.projectY[i] = (int) ((Window.screenSizeY/2 - player.viewFocus.y) + project.y * player.zoom);
+			this.projectX[i] = (int) ((Window.width/2 - player.viewFocus.x) + project.x * player.zoom);
+			this.projectY[i] = (int) ((Window.height/2 - player.viewFocus.y) + project.y * player.zoom);
 		}
 		
 		// Calculate polygon lighting
@@ -76,8 +76,8 @@ public class Polygon implements Comparable<Polygon>{
 		// Calculate normal line
 		project = this.getCentre().add(this.normal.scale(Voxel.length / 2)).project(player);
 		this.projectN = new Vector(
-			((Window.screenSizeX/2 - player.viewFocus.x) + project.x * player.zoom),
-			((Window.screenSizeY/2 - player.viewFocus.y) + project.y * player.zoom),
+			((Window.width/2 - player.viewFocus.x) + project.x * player.zoom),
+			((Window.height/2 - player.viewFocus.y) + project.y * player.zoom),
 			project.z
 		);
 
@@ -129,8 +129,8 @@ public class Polygon implements Comparable<Polygon>{
 	}
 
 	public boolean mouseOver(){
-		double x = Window.screenSizeX/2;
-		double y = Window.screenSizeY/2;
+		double x = Window.width/2;
+		double y = Window.height/2;
 		int j = this.projectX.length-1 ;
 		boolean oddNodes = false;
 

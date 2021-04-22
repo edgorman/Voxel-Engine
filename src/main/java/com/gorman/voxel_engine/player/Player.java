@@ -55,8 +55,13 @@ public class Player{
 	}
 
 	public void processMouse(){
-		double difX = (this.input.mouseX - Window.screenSizeX/2);
-		double difY = (this.input.mouseY - Window.screenSizeY/2);
+		double difX = (this.input.mouseX - (int) (Window.width/2f));
+		double difY = (this.input.mouseY - (int) (Window.height/2f));
+		// TODO: Fix weird bug with window height
+		// If window height is not 1080, mouse input still thinks it is
+		// The mouse position could be relative to screen instead of window
+		// e.g. screen 0,0 rather than window 0,0
+		difY -= Math.min(15, (1080-Window.height)/2);
 		difY *= 6 - Math.abs(this.vertLook) * 5;
 
 		this.vertLook -= difY  / this.vertLookSpeed;
@@ -139,8 +144,8 @@ public class Player{
 
 	public void drawUI(Graphics g, World w){
 		g.setColor(Color.black);
-		g.drawLine(Window.screenSizeX/2 - this.aimSight, Window.screenSizeY/2, Window.screenSizeX/2 + this.aimSight, Window.screenSizeY/2);
-		g.drawLine(Window.screenSizeX/2, Window.screenSizeY/2 - this.aimSight, Window.screenSizeX/2, Window.screenSizeY/2 + this.aimSight);
+		g.drawLine((int) (Window.width/2f) - this.aimSight, (int) (Window.height/2f), (int) (Window.width/2f) + this.aimSight, (int) (Window.height/2f));
+		g.drawLine((int) (Window.width/2f), (int) (Window.height/2f) - this.aimSight, (int) (Window.width/2f), (int) (Window.height/2f) + this.aimSight);
 
 		if (this.input.debug){
 			g.setColor(Color.black);

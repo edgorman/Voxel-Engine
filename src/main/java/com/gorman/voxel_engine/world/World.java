@@ -13,6 +13,7 @@ import java.util.Collections;
 
 import javax.swing.JPanel;
 
+import com.gorman.voxel_engine.Main;
 import com.gorman.voxel_engine.player.Player;
 import com.gorman.voxel_engine.window.Window;
 import com.gorman.voxel_engine.world.primitives.Polygon;
@@ -58,7 +59,7 @@ public class World extends JPanel{
 
 	public World(long s){
 		super();
-		this.setSize(Window.screenSizeX, Window.screenSizeY);
+		this.setSize((int) Window.width, (int) Window.height);
 		this.setFocusable(true);
 		this.hideMouse();
 		
@@ -83,7 +84,7 @@ public class World extends JPanel{
    	}
 
 	public static void centerMouse(){
-		try { new Robot().mouseMove(Window.screenSizeX/2, Window.screenSizeY/2); } 
+		try { new Robot().mouseMove((int) (Main.screenSizeX/2f), (int) (Main.screenSizeY/2f)); } 
 		catch (AWTException e) { e.printStackTrace(); }
 	}
 
@@ -101,7 +102,7 @@ public class World extends JPanel{
 		// Clear screen and draw background
 		super.paint(g);
 		g.setColor(new Color(140, 180, 180));
-		g.fillRect(0, 0, Window.screenSizeX, Window.screenSizeY);
+		g.fillRect(0, 0, (int) Window.width, (int) Window.height);
 
 		// Update user view
 		this.player.processMovement();

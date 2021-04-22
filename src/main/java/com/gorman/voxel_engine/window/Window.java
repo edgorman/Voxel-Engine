@@ -14,16 +14,16 @@ public class Window extends JFrame{
     
     private static final long serialVersionUID = 1L;
     
-    public static int screenSizeX = 1920;
-    public static int screenSizeY = 1080;
+    public static double width = 1920;
+    public static double height = 500;
 
     public Window(String title) {
         super(title);
 
         this.setLayout(null);
         this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-        this.setSize(screenSizeX, screenSizeY);
-        // this.setLocationRelativeTo(null);
+        this.setSize((int) Window.width, (int) Window.height);
+        this.setLocationRelativeTo(null);
         this.setUndecorated(true);
         this.setVisible(true);
     }

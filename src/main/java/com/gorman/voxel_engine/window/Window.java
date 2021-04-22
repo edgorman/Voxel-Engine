@@ -15,7 +15,7 @@ public class Window extends JFrame{
     private static final long serialVersionUID = 1L;
     
     public static double width = 1920;
-    public static double height = 500;
+    public static double height = 1080;
 
     public Window(String title) {
         super(title);

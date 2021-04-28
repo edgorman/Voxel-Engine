@@ -47,7 +47,7 @@ public class TestChunkManager
         FlatTerrain f = new FlatTerrain(0, 1);
         ChunkManager m = new ChunkManager(f, 1);
         
-        m.getChunks(new Vector(0, 0, 0));
+        m.loadChunks(new Vector(0, 0, 0));
         assertEquals(9 * f.maxZ, m.map.size(), 0);
         assertNotNull(m.map.get(new Vector(0, 0, 0)));
         assertEquals(9 * f.maxZ, m.map.size(), 0);

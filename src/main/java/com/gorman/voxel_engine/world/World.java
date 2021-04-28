@@ -93,7 +93,7 @@ public class World extends JPanel{
 		// Update world chunks
 		Vector pc = this.chunks.getChunkVector(this.player.viewFrom);
 		if (!pc.equals(this.lastPlayerChunk)){
-			this.chunks.getChunks(pc);
+			this.chunks.loadChunks(pc);
 			this.lastPlayerChunk = pc;
 		}
 	}

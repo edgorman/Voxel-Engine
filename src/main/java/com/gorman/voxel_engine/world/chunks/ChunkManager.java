@@ -19,6 +19,7 @@ public class ChunkManager {
         this.terrain = t;
         this.radius = r;
 
+        this.loaded = new ArrayList<Chunk>();
         this.map = new HashMap<Vector, Chunk>();
     }
 
@@ -39,8 +40,7 @@ public class ChunkManager {
         );
     }
 
-    public void getChunks(Vector p){
-        this.loaded = new ArrayList<Chunk>();
+    public void loadChunks(Vector p){
         Vector pc = this.getChunkVector(p);
 
         for (int x = -this.radius; x <= this.radius; x++){
@@ -86,12 +86,24 @@ public class ChunkManager {
 
                             this.map.put(q, c);
                         }
-                        this.loaded.add(c);
+                        
+                        // Check if loaded contains chunk before adding
+                        if (!this.loaded.contains(c))
+                            this.loaded.add(c);
                     }
                 }
                 
             }
         }
+
+        // Remove chunks outside of load distance
+        this.loaded.removeIf(
+            c -> (
+                Math.abs((pc.x / Chunk.size) - (c.position.x / Chunk.size)) + 
+                Math.abs((pc.y / Chunk.size) - (c.position.y / Chunk.size)) - 
+                1 > this.radius
+            )
+        );
     }
 
 }

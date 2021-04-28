@@ -99,9 +99,10 @@ public class ChunkManager {
         // Remove chunks outside of load distance
         this.loaded.removeIf(
             c -> (
-                Math.abs((pc.x / Chunk.size) - (c.position.x / Chunk.size)) + 
-                Math.abs((pc.y / Chunk.size) - (c.position.y / Chunk.size)) - 
-                1 > this.radius
+                Math.abs((pc.x / Chunk.size) - (c.position.x / Chunk.size)) - 1 + 
+                Math.abs((pc.y / Chunk.size) - (c.position.y / Chunk.size)) > this.radius ||
+                Math.abs((pc.x / Chunk.size) - (c.position.x / Chunk.size)) > this.radius ||
+                Math.abs((pc.y / Chunk.size) - (c.position.y / Chunk.size)) > this.radius
             )
         );
     }

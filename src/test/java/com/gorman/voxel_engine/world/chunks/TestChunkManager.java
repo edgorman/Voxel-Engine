@@ -1,9 +1,10 @@
-package com.gorman.voxel_engine.world.terrain;
+package com.gorman.voxel_engine.world.chunks;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 
 import com.gorman.voxel_engine.world.primitives.Vector;
+import com.gorman.voxel_engine.world.terrain.FlatTerrain;
 
 import org.junit.Test;
 import org.junit.Ignore;

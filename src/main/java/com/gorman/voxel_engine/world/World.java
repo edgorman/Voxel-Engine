@@ -16,11 +16,11 @@ import javax.swing.JPanel;
 import com.gorman.voxel_engine.Main;
 import com.gorman.voxel_engine.player.Player;
 import com.gorman.voxel_engine.window.Window;
+import com.gorman.voxel_engine.world.chunks.Chunk;
+import com.gorman.voxel_engine.world.chunks.ChunkManager;
 import com.gorman.voxel_engine.world.primitives.Polygon;
 import com.gorman.voxel_engine.world.primitives.Vector;
-import com.gorman.voxel_engine.world.terrain.Chunk;
-import com.gorman.voxel_engine.world.terrain.ChunkManager;
-import com.gorman.voxel_engine.world.terrain.NormalTerrain;
+import com.gorman.voxel_engine.world.terrain.FlatTerrain;
 import com.gorman.voxel_engine.world.voxels.Voxel;
 
 /**
@@ -72,7 +72,7 @@ public class World extends JPanel{
 		
 		// Init world objects
 		this.seed = s;
-		this.chunks = new ChunkManager(new NormalTerrain(s, 16), 2);
+		this.chunks = new ChunkManager(new FlatTerrain(s, 16), 5);
 		this.update();
 	}
 

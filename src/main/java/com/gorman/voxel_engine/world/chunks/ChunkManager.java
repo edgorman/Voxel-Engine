@@ -1,9 +1,10 @@
-package com.gorman.voxel_engine.world.terrain;
+package com.gorman.voxel_engine.world.chunks;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 
 import com.gorman.voxel_engine.world.primitives.Vector;
+import com.gorman.voxel_engine.world.terrain.Terrain;
 import com.gorman.voxel_engine.world.voxels.Voxel;
 
 public class ChunkManager {

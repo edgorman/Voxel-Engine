@@ -1,4 +1,4 @@
-package com.gorman.voxel_engine.world.terrain;
+package com.gorman.voxel_engine.world.chunks;
 
 import java.util.ArrayList;
 

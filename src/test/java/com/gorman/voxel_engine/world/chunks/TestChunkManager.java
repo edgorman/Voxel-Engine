@@ -1,9 +1,10 @@
-package com.gorman.voxel_engine.world.terrain;
+package com.gorman.voxel_engine.world.chunks;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 
 import com.gorman.voxel_engine.world.primitives.Vector;
+import com.gorman.voxel_engine.world.terrain.FlatTerrain;
 
 import org.junit.Test;
 import org.junit.Ignore;
@@ -46,7 +47,7 @@ public class TestChunkManager
         FlatTerrain f = new FlatTerrain(0, 1);
         ChunkManager m = new ChunkManager(f, 1);
         
-        m.getChunks(new Vector(0, 0, 0));
+        m.loadChunks(new Vector(0, 0, 0));
         assertEquals(9 * f.maxZ, m.map.size(), 0);
         assertNotNull(m.map.get(new Vector(0, 0, 0)));
         assertEquals(9 * f.maxZ, m.map.size(), 0);

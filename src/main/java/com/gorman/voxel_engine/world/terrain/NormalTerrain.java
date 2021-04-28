@@ -1,6 +1,7 @@
 package com.gorman.voxel_engine.world.terrain;
 
 import com.gorman.voxel_engine.world.voxels.Stone;
+import com.gorman.voxel_engine.world.chunks.Chunk;
 import com.gorman.voxel_engine.world.noise.Noise;
 import com.gorman.voxel_engine.world.noise.SimplexNoise;
 import com.gorman.voxel_engine.world.primitives.Vector;

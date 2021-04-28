@@ -1,5 +1,6 @@
 package com.gorman.voxel_engine.world.terrain;
 
+import com.gorman.voxel_engine.world.chunks.Chunk;
 import com.gorman.voxel_engine.world.primitives.Vector;
 import com.gorman.voxel_engine.world.voxels.Stone;
 import com.gorman.voxel_engine.world.voxels.Grass;

@@ -7,8 +7,8 @@ import com.gorman.voxel_engine.world.voxels.Stone;
 
 public class FlatTerrain extends Terrain {
 
-    public FlatTerrain(long s, int m) {
-        super(s, m);
+    public FlatTerrain(long s) {
+        super(s, 16);
     }
 
     @Override

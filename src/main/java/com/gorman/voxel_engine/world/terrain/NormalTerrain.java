@@ -10,9 +10,16 @@ public class NormalTerrain extends Terrain{
 
     public Noise noise;
 
-    public NormalTerrain(long s, int m) {
-        super(s, m);
+    public NormalTerrain(long s) {
+        super(s, 32);
         this.noise = new SimplexNoise(s);
+    }
+
+    private double getTerrainHeight(double x, double y){
+        return (
+            this.noise.noise(x * 0.01, y * 0.01, 0) + 
+            this.noise.noise(x * 0.005, y * 0.005, 0)
+        ) / 2;
     }
 
     @Override
@@ -24,9 +31,10 @@ public class NormalTerrain extends Terrain{
                 double za = Chunk.size * this.maxZ / 16;
                 double zb = 0d;
                 double zc = -1d;
-                double zd = this.noise.noise(x * 0.01, y * 0.01, 0);
+                double zd = this.getTerrainHeight(x, y);
                 double ze = 1d;
-                int zi = 64 + (int) (((za - zb) * (zd - zc) / (ze - zc)) + zb);
+                double zf = 16;
+                int zi = (int) (((za - zb) * (zd - zc) / (ze - zc)) + zb + zf);
 
                 for (double z = p.z; z < p.z + Chunk.size && z <= zi; z++){
                     try { c.addVoxel(new Stone(new Vector(x, y, z))); } 

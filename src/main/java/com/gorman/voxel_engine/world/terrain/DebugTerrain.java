@@ -7,8 +7,8 @@ import com.gorman.voxel_engine.world.voxels.Grass;
 
 public class DebugTerrain extends Terrain{
 
-    public DebugTerrain(long s, int m) {
-        super(s, m);
+    public DebugTerrain(long s) {
+        super(s, 16);
     }
 
     @Override

@@ -14,7 +14,7 @@ public class TestChunkManager
 
     @Test
     public void checkObjectInstantiation(){
-        FlatTerrain f = new FlatTerrain(0, 1);
+        FlatTerrain f = new FlatTerrain(0);
         ChunkManager m = new ChunkManager(f, 1);
 
         assertEquals(0, m.map.size(), 0);
@@ -22,7 +22,7 @@ public class TestChunkManager
 
     @Test
     public void checkGetChunkVector(){
-        FlatTerrain f = new FlatTerrain(0, 1);
+        FlatTerrain f = new FlatTerrain(0);
         ChunkManager m = new ChunkManager(f, 1);
 
         Vector u = m.getChunkVector(new Vector(0, 0, 0));
@@ -44,7 +44,7 @@ public class TestChunkManager
     @Ignore
     @Test
     public void checkGetChunks(){
-        FlatTerrain f = new FlatTerrain(0, 1);
+        FlatTerrain f = new FlatTerrain(0);
         ChunkManager m = new ChunkManager(f, 1);
         
         m.loadChunks(new Vector(0, 0, 0));

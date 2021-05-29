@@ -38,7 +38,7 @@ public class Player{
 	public Polygon polygonMouseOver;
 
 	public Player(Vector vf){
-		this.movementSpeed = 0.25;
+		this.movementSpeed = 0.50;
 		this.horzLookSpeed = 900;
 		this.vertLookSpeed = 2200;
 		this.horzLook = 0;
@@ -149,7 +149,7 @@ public class Player{
 
 		if (this.input.debug){
 			g.setColor(Color.black);
-			g.drawString("Voxel Terrain - v0.1", 10, 20);
+			g.drawString("Voxel Terrain - v0.2", 10, 20);
 			g.drawString("FPS: " + (int) w.fps, 10, 40);
 			g.drawString("xyz: " + this.viewFrom/*.scale(1/Voxel.length)*/, 10, 60);
 			g.drawString("Look: " + this.viewTo.subtract(this.viewFrom), 10, 80);

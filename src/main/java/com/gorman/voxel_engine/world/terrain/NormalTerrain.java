@@ -10,9 +10,26 @@ public class NormalTerrain extends Terrain{
 
     public Noise noise;
 
-    public NormalTerrain(long s, int m) {
-        super(s, m);
+    public NormalTerrain(long s) {
+        super(s, 32);
         this.noise = new SimplexNoise(s);
+    }
+
+    private int getZ(double x, double y){
+        return Math.max(
+            0, 
+            24 + 
+            (int) (
+                (
+                    this.noise.noise(x * 0.005, y * 0.005, 0) + 
+                    this.noise.noise(x * 0.004, y * 0.0004, 0) +
+                    this.noise.noise(x * 0.01, y * 0.01, 0)
+                ) 
+                / 3
+                * 
+                16
+            )
+        );
     }
 
     @Override
@@ -21,14 +38,7 @@ public class NormalTerrain extends Terrain{
 
         for (double x = p.x; x < p.x + Chunk.size; x++){
             for (double y = p.y; y < p.y + Chunk.size; y++){
-                double za = Chunk.size * this.maxZ / 16;
-                double zb = 0d;
-                double zc = -1d;
-                double zd = this.noise.noise(x * 0.01, y * 0.01, 0);
-                double ze = 1d;
-                int zi = 64 + (int) (((za - zb) * (zd - zc) / (ze - zc)) + zb);
-
-                for (double z = p.z; z < p.z + Chunk.size && z <= zi; z++){
+                for (double z = p.z; z < p.z + Chunk.size && z <= this.getZ(x, y); z++){
                     try { c.addVoxel(new Stone(new Vector(x, y, z))); } 
                     catch (Exception e) { e.printStackTrace(); }
                 }

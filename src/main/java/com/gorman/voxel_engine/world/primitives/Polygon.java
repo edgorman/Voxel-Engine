@@ -15,6 +15,8 @@ import com.gorman.voxel_engine.world.voxels.Voxel;
  */
 public class Polygon implements Comparable<Polygon>{
 
+	public Object parent;
+
 	public Vector[] vertexes;
 	public Vector normal;
 	public int[] projectX;
@@ -28,7 +30,9 @@ public class Polygon implements Comparable<Polygon>{
 
 	public double distance;
 	
-	public Polygon(double[] x, double[] y,  double[] z, Color c){	
+	public Polygon(Object p, double[] x, double[] y,  double[] z, Color c){	
+		this.parent = p;
+
 		this.vertexes = new Vector[x.length];
 		for (int i = 0; i < x.length; i++)
 			this.vertexes[i] = new Vector(x[i], y[i], z[i]);

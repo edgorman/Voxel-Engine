@@ -15,7 +15,7 @@ import com.gorman.voxel_engine.world.voxels.Voxel;
  */
 public class Polygon implements Comparable<Polygon>{
 
-	public Object parent;
+	public Voxel parent;
 
 	public Vector[] vertexes;
 	public Vector normal;
@@ -30,7 +30,7 @@ public class Polygon implements Comparable<Polygon>{
 
 	public double distance;
 	
-	public Polygon(Object p, double[] x, double[] y,  double[] z, Color c){	
+	public Polygon(Voxel p, double[] x, double[] y,  double[] z, Color c){	
 		this.parent = p;
 
 		this.vertexes = new Vector[x.length];

@@ -22,6 +22,7 @@ public abstract class Voxel {
 		new Vector(1, 0, 0)
 	};
 	
+	public boolean isSolid;
 	public Vector position;
 	public Vector ps;
 	public double rotation;
@@ -29,11 +30,12 @@ public abstract class Voxel {
 	public Polygon[] faces;
 	public Voxel[] neighbors;
 	
-	public Voxel(Vector p, Color c){
+	public Voxel(Vector p, Color c, boolean s){
 		this.position = p;
 		this.ps = this.position.scale(Voxel.length);
 		this.rotation = 0;
 		this.color = c;
+		this.isSolid = s;
 
 		this.faces = new Polygon[6];
 		this.faces[0] = new Polygon(this, new double[]{ps.x, ps.x, ps.x+length, ps.x+length}, new double[]{ps.y, ps.y+length, ps.y+length, ps.y},  new double[]{ps.z, ps.z, ps.z, ps.z}, c);
@@ -44,6 +46,10 @@ public abstract class Voxel {
 		this.faces[5] = new Polygon(this, new double[]{ps.x+length, ps.x+length, ps.x+length, ps.x+length}, new double[]{ps.y, ps.y+length, ps.y+length, ps.y},  new double[]{ps.z, ps.z, ps.z+length, ps.z+length}, c);
 		
 		this.neighbors = new Voxel[6];
+	}
+
+	public boolean isSolid(){
+		return isSolid;
 	}
 
 	public boolean update(Player player){

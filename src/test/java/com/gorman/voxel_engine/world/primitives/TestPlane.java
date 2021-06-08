@@ -10,6 +10,7 @@ public class TestPlane
     @Test
     public void checkObjectInstantiation(){
         Polygon p = new Polygon(
+            null,
             new double[]{0, 0, 1, 1}, 
             new double[]{0, 0, 0, 0}, 
             new double[]{0, 1, 0, 1},

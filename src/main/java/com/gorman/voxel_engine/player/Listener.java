@@ -20,7 +20,7 @@ public class Listener implements KeyListener, MouseListener, MouseMotionListener
     private Player player;
 	public boolean left, right, forward, back, up, down, sprint, exit, debug;
     public int mouseX, mouseY, mouseScroll;
-    public boolean rightClick, leftClick;
+    public boolean rightClick, leftClick, mouseDown;
 
     public Listener(Player p){
         this.player = p;
@@ -81,6 +81,7 @@ public class Listener implements KeyListener, MouseListener, MouseMotionListener
     }
 
     public void mousePressed(MouseEvent e) {
+        mouseDown = true;
         switch(e.getButton()){
             case MouseEvent.BUTTON1: leftClick = true; break;
             case MouseEvent.BUTTON3: rightClick = true; break;
@@ -90,6 +91,7 @@ public class Listener implements KeyListener, MouseListener, MouseMotionListener
     }
 
     public void mouseReleased(MouseEvent e) {
+        mouseDown = false;
         switch(e.getButton()){
             case MouseEvent.BUTTON1: leftClick = false; break;
             case MouseEvent.BUTTON3: rightClick = false; break;

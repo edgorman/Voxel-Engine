@@ -72,6 +72,15 @@ public class Chunk {
             Vector q = v.position.absolute(this.position);
             this.array[(int) q.x][(int) q.y][(int) q.z] = null;
             this.list.remove(v);
+            
+            // Update neighbor references by removing this voxel
+            for (int i = 0; i < v.neighbors.length; i++){
+                if (v.neighbors[i] != null){
+                    v.neighbors[i].neighbors[
+                        i - (int) Voxel.directions[i].sum()
+                    ] = null;
+                }
+            }
         }
         else
             throw new Exception("Error: Cannot remove voxel from position, does not contain a voxel: " + v.position);

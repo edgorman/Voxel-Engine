@@ -32,6 +32,22 @@ public class ChunkManager {
         catch (Exception e) { return null; }
     }
 
+    public void addVoxel(Voxel v) throws Exception{
+        Chunk c = this.map.get(this.getChunkVector(v.position));
+
+        if (c == null)
+            throw new Exception("Error: Cannot add voxel to position, chunk does not exist: " + v.position);
+        c.addVoxel(v);
+    }
+
+    public void removeVoxel(Voxel v) throws Exception{
+        Chunk c = this.map.get(this.getChunkVector(v.position));
+
+        if (c == null)
+            throw new Exception("Error: Cannot remove voxel from position, chunk does not exist: " + v.position);
+        c.removeVoxel(v);
+    }
+
     public Vector getChunkVector(Vector p){
         return new Vector(
             Chunk.size * Math.floor(p.x/Chunk.size),

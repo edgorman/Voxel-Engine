@@ -8,6 +8,7 @@ import com.gorman.voxel_engine.world.World;
 import com.gorman.voxel_engine.world.primitives.Plane;
 import com.gorman.voxel_engine.world.primitives.Polygon;
 import com.gorman.voxel_engine.world.primitives.Vector;
+import com.gorman.voxel_engine.world.voxels.Stone;
 
 /**
  * The Player object represents the player in the game world.
@@ -15,6 +16,8 @@ import com.gorman.voxel_engine.world.primitives.Vector;
  * @author Edward Gorman
  */
 public class Player{
+
+	private World world;
     
 	private double movementSpeed;
 	private double horzLookSpeed;
@@ -54,6 +57,10 @@ public class Player{
 		this.polygonMouseOver = null;
 	}
 
+	public void setWorld(World w){
+		this.world = w;
+	}
+
 	public void processMouse(){
 		double difX = (this.input.mouseX - (int) (Window.width/2f));
 		double difY = (this.input.mouseY - (int) (Window.height/2f));
@@ -68,13 +75,22 @@ public class Player{
 		this.horzLook += difX / this.horzLookSpeed;
 		this.vertLook = Math.min(this.vertLook, 0.999);
 		this.vertLook = Math.max(this.vertLook, -0.999);
+		
+		try{
+			if(this.input.leftClick)
+				if(this.polygonMouseOver != null)
+					this.world.chunks.removeVoxel(this.polygonMouseOver.parent);
+					// this.polygonMouseOver.alpha = 255;
+		}
+		catch (Exception e) { e.printStackTrace(); }
 
-		if(this.input.leftClick)
-			if(this.polygonMouseOver != null)
-				this.polygonMouseOver.alpha = 255;
-		if(this.input.rightClick)
-			if(this.polygonMouseOver != null)
-				this.polygonMouseOver.alpha = 0;
+		try{
+			if(this.input.rightClick)
+				if(this.polygonMouseOver != null)
+					this.world.chunks.addVoxel(new Stone(new Vector(this.polygonMouseOver.parent.position.add(this.polygonMouseOver.normal))));
+					// this.polygonMouseOver.alpha = 0;
+		}
+		catch (Exception e) { e.printStackTrace(); }
 		
 		if(this.input.mouseScroll > 0)
 			if(this.zoom > this.minZoom)

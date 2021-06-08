@@ -57,14 +57,19 @@ public class World extends JPanel{
 	public double fps;
 	public double frames;
 
-	public World(long s){
+	public World(long s, Player p){
 		super();
 		this.setSize((int) Window.width, (int) Window.height);
 		this.setFocusable(true);
 		this.hideMouse();
 		
 		// Init player objects
-		this.player = new Player(new Vector(0, 0, 70));
+		this.player = p;
+		// TODO: Not a fan of this
+		// Needed so that a player can interact with chunk manager 
+		this.player.setWorld(this);
+
+		// Setup user input
 		this.addKeyListener(this.player.input);
 		this.addMouseListener(this.player.input);
 		this.addMouseMotionListener(this.player.input);

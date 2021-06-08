@@ -156,8 +156,7 @@ public class World extends JPanel{
 					Polygon p = v.faces[k];
 					this.totalPolygons++;
 
-					if (v.neighbors[k] == null)
-						if(v.isSolid() && !v.neighbors[k].isSolid())
+					if (v.neighbors[k] == null || v.isSolid() && !v.neighbors[k].isSolid())
 							if(c.visibleDirections.contains(p.normal))
 								if (p.update(this.player))
 									this.renderObjects.add(p);

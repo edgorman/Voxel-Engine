@@ -95,6 +95,10 @@ public class World extends JPanel{
 
 	// World methods --------------------
 	public void update(){
+		// Update player
+		if (player.input.mouseDown)
+			this.player.processMouseClick();
+
 		// Update world chunks
 		Vector pc = this.chunks.getChunkVector(this.player.viewFrom);
 		if (!pc.equals(this.lastPlayerChunk)){

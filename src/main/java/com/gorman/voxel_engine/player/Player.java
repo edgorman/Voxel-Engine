@@ -76,21 +76,7 @@ public class Player{
 		this.vertLook = Math.min(this.vertLook, 0.999);
 		this.vertLook = Math.max(this.vertLook, -0.999);
 		
-		try{
-			if(this.input.leftClick)
-				if(this.polygonMouseOver != null)
-					this.world.chunks.removeVoxel(this.polygonMouseOver.parent);
-					// this.polygonMouseOver.alpha = 255;
-		}
-		catch (Exception e) { e.printStackTrace(); }
-
-		try{
-			if(this.input.rightClick)
-				if(this.polygonMouseOver != null)
-					this.world.chunks.addVoxel(new Stone(new Vector(this.polygonMouseOver.parent.position.add(this.polygonMouseOver.normal))));
-					// this.polygonMouseOver.alpha = 0;
-		}
-		catch (Exception e) { e.printStackTrace(); }
+		this.processMouseClick();
 		
 		if(this.input.mouseScroll > 0)
 			if(this.zoom > this.minZoom)
@@ -107,6 +93,24 @@ public class Player{
 			viewFrom.y + r * Math.sin(this.horzLook),
 			viewFrom.z + this.vertLook
 		);
+	}
+
+	public void processMouseClick(){
+		try{
+			if(this.input.leftClick)
+				if(this.polygonMouseOver != null)
+					this.world.chunks.removeVoxel(this.polygonMouseOver.parent);
+					// this.polygonMouseOver.alpha = 255;
+		}
+		catch (Exception e) {  }
+
+		try{
+			if(this.input.rightClick)
+				if(this.polygonMouseOver != null)
+					this.world.chunks.addVoxel(new Stone(new Vector(this.polygonMouseOver.parent.position.add(this.polygonMouseOver.normal))));
+					// this.polygonMouseOver.alpha = 0;
+		}
+		catch (Exception e) {  }
 	}
 
     public void processMovement(){

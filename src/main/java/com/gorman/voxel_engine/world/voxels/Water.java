@@ -7,7 +7,7 @@ import com.gorman.voxel_engine.world.primitives.Vector;
 public class Water extends Voxel {
 
     public Water(Vector p) {
-        super(p, new Color(82, 92, 186, 220));
+        super(p, new Color(82, 92, 186, 220), false);
     }
     
 }

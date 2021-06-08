@@ -9,6 +9,8 @@ import java.awt.event.MouseWheelEvent;
 import java.awt.event.MouseWheelListener;
 
 import com.gorman.voxel_engine.world.World;
+import com.gorman.voxel_engine.world.voxels.*;
+import com.gorman.voxel_engine.world.primitives.Vector;
 
 /**
  * The Listener object handles user input.
@@ -37,6 +39,11 @@ public class Listener implements KeyListener, MouseListener, MouseMotionListener
             case KeyEvent.VK_SHIFT: sprint = true; break;
             case KeyEvent.VK_ESCAPE: exit = true; break;
             case KeyEvent.VK_F1: debug = !debug; break;
+            case KeyEvent.VK_1: try{ player.voxelConstructor = Stone.class.getDeclaredConstructor(Vector.class); } catch (Exception e) { }; break;
+            case KeyEvent.VK_2: try{ player.voxelConstructor = Grass.class.getDeclaredConstructor(Vector.class); } catch (Exception e) { }; break;
+            case KeyEvent.VK_3: try{ player.voxelConstructor = Wood.class.getDeclaredConstructor(Vector.class); } catch (Exception e) { }; break;
+            case KeyEvent.VK_4: try{ player.voxelConstructor = Sand.class.getDeclaredConstructor(Vector.class); } catch (Exception e) { }; break;
+            case KeyEvent.VK_5: try{ player.voxelConstructor = Water.class.getDeclaredConstructor(Vector.class); } catch (Exception e) { }; break;
             default:
         }
 	}

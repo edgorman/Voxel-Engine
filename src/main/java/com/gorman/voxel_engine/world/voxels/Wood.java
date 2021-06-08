@@ -7,7 +7,7 @@ import com.gorman.voxel_engine.world.primitives.Vector;
 public class Wood extends Voxel {
 
     public Wood(Vector p) {
-        super(p, new Color(48, 30, 23, 255));
+        super(p, new Color(48, 30, 23, 255), true);
     }
     
 }

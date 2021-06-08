@@ -2,12 +2,14 @@ package com.gorman.voxel_engine.player;
 
 import java.awt.Color;
 import java.awt.Graphics;
+import java.lang.reflect.Constructor;
 
 import com.gorman.voxel_engine.window.Window;
 import com.gorman.voxel_engine.world.World;
 import com.gorman.voxel_engine.world.primitives.Plane;
 import com.gorman.voxel_engine.world.primitives.Polygon;
 import com.gorman.voxel_engine.world.primitives.Vector;
+import com.gorman.voxel_engine.world.voxels.Voxel;
 import com.gorman.voxel_engine.world.voxels.Stone;
 
 /**
@@ -39,6 +41,7 @@ public class Player{
 	
 	public Listener input;
 	public Polygon polygonMouseOver;
+	public Constructor voxelConstructor;
 
 	public Player(Vector vf){
 		this.movementSpeed = 0.50;
@@ -55,6 +58,9 @@ public class Player{
 		this.viewTo = new Vector(0, 0, 0);
 		this.input = new Listener(this);
 		this.polygonMouseOver = null;
+
+		try{ this.voxelConstructor = Stone.class.getDeclaredConstructor(Vector.class); }
+		catch (Exception e) { }
 	}
 
 	public void setWorld(World w){
@@ -107,7 +113,9 @@ public class Player{
 		try{
 			if(this.input.rightClick)
 				if(this.polygonMouseOver != null)
-					this.world.chunks.addVoxel(new Stone(new Vector(this.polygonMouseOver.parent.position.add(this.polygonMouseOver.normal))));
+					this.world.chunks.addVoxel((Voxel) this.voxelConstructor.newInstance(
+						new Vector(this.polygonMouseOver.parent.position.add(this.polygonMouseOver.normal))
+					));
 					// this.polygonMouseOver.alpha = 0;
 		}
 		catch (Exception e) {  }

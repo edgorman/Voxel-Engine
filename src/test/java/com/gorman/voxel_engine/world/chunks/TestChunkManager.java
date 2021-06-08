@@ -2,7 +2,10 @@ package com.gorman.voxel_engine.world.chunks;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.fail;
 
+import com.gorman.voxel_engine.world.voxels.Stone;
+import com.gorman.voxel_engine.world.voxels.Voxel;
 import com.gorman.voxel_engine.world.primitives.Vector;
 import com.gorman.voxel_engine.world.terrain.FlatTerrain;
 
@@ -19,6 +22,47 @@ public class TestChunkManager
 
         assertEquals(0, m.map.size(), 0);
     }
+
+    @Test
+    public void checkGetVoxel(){
+        FlatTerrain f = new FlatTerrain(0);
+        ChunkManager m = new ChunkManager(f, 1);
+        m.loadChunks(new Vector(0, 0, 0));
+        Voxel v = m.getVoxel(new Vector(0, 0, 0));
+        
+        assertNotNull(v);
+    }
+
+    @Test
+    public void checkAddVoxel(){
+        FlatTerrain f = new FlatTerrain(0);
+        ChunkManager m = new ChunkManager(f, 1);
+        m.loadChunks(new Vector(0, 0, 0));
+        Voxel v = new Stone(new Vector(0, 0, 16));
+
+        try {
+            m.addVoxel(v);
+        } 
+        catch (Exception e) {
+            fail("An exception was not expected on: checkAddVoxel()");
+        }
+    }
+
+    @Test
+    public void checkRemoveVoxel(){
+        FlatTerrain f = new FlatTerrain(0);
+        ChunkManager m = new ChunkManager(f, 1);
+        m.loadChunks(new Vector(0, 0, 0));
+        Voxel v = m.getVoxel(new Vector(0, 0, 0));
+
+        try {
+            m.removeVoxel(v);
+        } 
+        catch (Exception e) {
+            fail("An exception was not expected on: checkRemoveVoxel()");
+        }
+    }
+
 
     @Test
     public void checkGetChunkVector(){

@@ -85,7 +85,6 @@ public class TestChunkManager
         assertEquals(0 * Chunk.size, w.z, 0);
     }
 
-    @Ignore
     @Test
     public void checkGetChunks(){
         FlatTerrain f = new FlatTerrain(0);

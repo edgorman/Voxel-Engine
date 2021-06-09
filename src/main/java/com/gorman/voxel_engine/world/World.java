@@ -97,7 +97,8 @@ public class World extends JPanel{
 	public void update(){
 		// Update player
 		if (player.input.mouseDown)
-			this.player.processMouseClick();
+			if (System.currentTimeMillis() > player.input.mouseDownTime + 1000)
+				this.player.processMouseClick();
 
 		// Update world chunks
 		Vector pc = this.chunks.getChunkVector(this.player.viewFrom);

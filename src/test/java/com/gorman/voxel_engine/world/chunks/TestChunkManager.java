@@ -10,7 +10,6 @@ import com.gorman.voxel_engine.world.primitives.Vector;
 import com.gorman.voxel_engine.world.terrain.FlatTerrain;
 
 import org.junit.Test;
-import org.junit.Ignore;
 
 public class TestChunkManager
 {

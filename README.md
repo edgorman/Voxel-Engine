@@ -4,7 +4,7 @@ A 3D rendering engine built in Java without any dependencies. Implements a raste
 
 [![Maven CI](https://github.com/edgorman/Voxel-Engine/actions/workflows/maven.yml/badge.svg)](https://github.com/edgorman/Voxel-Engine/actions/workflows/maven.yml)
 
-![Example of terrain generation from early an build](docs/images/early-terrain-example.png)
+![Picture of application running.](docs/images/voxel_engine-0.2.png)
 
 ## Installation
 Use the following command to clone the repository:

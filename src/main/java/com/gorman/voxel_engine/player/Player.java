@@ -4,6 +4,7 @@ import java.awt.Color;
 import java.awt.Graphics;
 import java.lang.reflect.Constructor;
 
+import com.gorman.voxel_engine.Main;
 import com.gorman.voxel_engine.window.Window;
 import com.gorman.voxel_engine.world.World;
 import com.gorman.voxel_engine.world.primitives.Plane;
@@ -41,7 +42,7 @@ public class Player{
 	
 	public Listener input;
 	public Polygon polygonMouseOver;
-	public Constructor voxelConstructor;
+	public Constructor<?> voxelConstructor;
 
 	public Player(Vector vf){
 		this.movementSpeed = 0.50;
@@ -70,11 +71,7 @@ public class Player{
 	public void processMouse(){
 		double difX = (this.input.mouseX - (int) (Window.width/2f));
 		double difY = (this.input.mouseY - (int) (Window.height/2f));
-		// TODO: Fix weird bug with window height
-		// If window height is not 1080, mouse input still thinks it is
-		// The mouse position could be relative to screen instead of window
-		// e.g. screen 0,0 rather than window 0,0
-		difY -= Math.min(15, (1080-Window.height)/2);
+		difY -= Math.min(15, (Main.screenSizeY-Window.height)/2);
 		difY *= 6 - Math.abs(this.vertLook) * 5;
 
 		this.vertLook -= difY  / this.vertLookSpeed;

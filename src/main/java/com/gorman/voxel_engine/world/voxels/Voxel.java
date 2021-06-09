@@ -2,7 +2,6 @@ package com.gorman.voxel_engine.world.voxels;
 
 import java.awt.Color;
 
-import com.gorman.voxel_engine.player.Player;
 import com.gorman.voxel_engine.world.primitives.Polygon;
 import com.gorman.voxel_engine.world.primitives.Vector;
 
@@ -50,10 +49,6 @@ public abstract class Voxel {
 
 	public boolean isSolid(){
 		return isSolid;
-	}
-
-	public boolean update(Player player){
-		return this.ps.project(player).z < 0;
 	}
 
 }

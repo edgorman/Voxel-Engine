@@ -27,10 +27,6 @@ public class Chunk {
         this.visibleDirections = new ArrayList<Vector>();
     }
 
-    public boolean update(Player player){
-		return this.position.project(player).z < 0;
-    }
-
     public boolean contains(Vector v){
         Vector u = v.absolute(this.position);
 

@@ -142,14 +142,10 @@ public class World extends JPanel{
 		for (int i = 0; i < this.chunks.loaded.size(); i++){
 			Chunk c = this.chunks.loaded.get(i);
 			c.setPrederterminedInfo(this.player);
-			// if (c.update(player))
-			// 		continue;
 			this.totalChunks++;
 
 			for (int j = 0; j < c.getVoxelList().size(); j++){
 				Voxel v = c.getVoxelList().get(j);
-				// if (v.update(player))
-				// 	continue;
 				this.totalVoxels++;
 
 				for (int k = 0; k < v.faces.length; k++){

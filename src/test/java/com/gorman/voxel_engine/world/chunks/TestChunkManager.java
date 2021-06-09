@@ -10,7 +10,6 @@ import com.gorman.voxel_engine.world.primitives.Vector;
 import com.gorman.voxel_engine.world.terrain.FlatTerrain;
 
 import org.junit.Test;
-import org.junit.Ignore;
 
 public class TestChunkManager
 {
@@ -85,7 +84,6 @@ public class TestChunkManager
         assertEquals(0 * Chunk.size, w.z, 0);
     }
 
-    @Ignore
     @Test
     public void checkGetChunks(){
         FlatTerrain f = new FlatTerrain(0);

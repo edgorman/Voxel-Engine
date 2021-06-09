@@ -20,7 +20,7 @@ public class Main{
 		
 		Player player = new Player(new Vector(0, 0, 70));
 		World world = new World(0, player);
-		Window window = new Window("Voxel Terrain Generator");
+		Window window = new Window("Voxel Terrain Generator", 1080, 1080);
         window.add(world);
 		world.run();
 	}

@@ -17,8 +17,10 @@ public class Window extends JFrame{
     public static double width = 1920;
     public static double height = 1080;
 
-    public Window(String title) {
+    public Window(String title, double w, double h) {
         super(title);
+        Window.width = w;
+        Window.height = h;
 
         this.setLayout(null);
         this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);

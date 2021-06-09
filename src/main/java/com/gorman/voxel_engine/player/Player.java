@@ -41,7 +41,7 @@ public class Player{
 	
 	public Listener input;
 	public Polygon polygonMouseOver;
-	public Constructor voxelConstructor;
+	public Constructor<?> voxelConstructor;
 
 	public Player(Vector vf){
 		this.movementSpeed = 0.50;

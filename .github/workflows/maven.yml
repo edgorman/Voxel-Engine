@@ -10,7 +10,9 @@ on:
   workflow_dispatch:
     inputs:
       name:
-        description: 'Manually triggered workflow'
+        description: 'Description'
+        required: false
+        default: 'Manually triggered workflow'
 
 jobs:
   build:

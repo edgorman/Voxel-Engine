@@ -20,7 +20,7 @@ import com.gorman.voxel_engine.world.chunks.Chunk;
 import com.gorman.voxel_engine.world.chunks.ChunkManager;
 import com.gorman.voxel_engine.world.primitives.Polygon;
 import com.gorman.voxel_engine.world.primitives.Vector;
-import com.gorman.voxel_engine.world.terrain.NormalTerrain;
+import com.gorman.voxel_engine.world.terrain.*;
 import com.gorman.voxel_engine.world.voxels.Voxel;
 
 /**
@@ -140,13 +140,11 @@ public class World extends JPanel{
 		this.totalPolygons = 0;
 		this.renderObjects = new ArrayList<Polygon>();
 
-		for (int i = 0; i < this.chunks.loaded.size(); i++){
-			Chunk c = this.chunks.loaded.get(i);
+		for (Chunk c : this.chunks.loaded){
 			c.setPrederterminedInfo(this.player);
 			this.totalChunks++;
 
-			for (int j = 0; j < c.getVoxelList().size(); j++){
-				Voxel v = c.getVoxelList().get(j);
+			for (Voxel v : c.getVoxelList()){
 				this.totalVoxels++;
 
 				for (int k = 0; k < v.faces.length; k++){
@@ -154,9 +152,9 @@ public class World extends JPanel{
 					this.totalPolygons++;
 
 					if (v.neighbors[k] == null || v.isSolid() && !v.neighbors[k].isSolid())
-							if(c.visibleDirections.contains(p.normal))
-								if (p.update(this.player))
-									this.renderObjects.add(p);
+						if(c.visibleDirections.contains(p.normal))
+							if (p.update(this.player))
+								this.renderObjects.add(p);
 
 				}
 			}

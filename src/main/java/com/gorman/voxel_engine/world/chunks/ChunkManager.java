@@ -38,6 +38,7 @@ public class ChunkManager {
         if (c == null)
             throw new Exception("Error: Cannot add voxel to position, chunk does not exist: " + v.position);
         c.addVoxel(v);
+        this.updateVoxelNeighbors(v, c);
     }
 
     public void removeVoxel(Voxel v) throws Exception{
@@ -46,6 +47,32 @@ public class ChunkManager {
         if (c == null)
             throw new Exception("Error: Cannot remove voxel from position, chunk does not exist: " + v.position);
         c.removeVoxel(v);
+    }
+
+    public void updateVoxelNeighbors(Voxel v, Chunk c){
+        for (int i = 0; i < Voxel.directions.length; i += 2){
+            if (v.neighbors[i] == null){
+                Voxel u;
+                Vector r = v.position.add(Voxel.directions[i]);
+                try { u = c.getVoxel(r); }  
+                catch (Exception e) { u = this.getVoxel(r); }
+
+                if (u != null){
+                    v.neighbors[i] = u;
+                    u.neighbors[i+1] = v;
+                }
+
+                Voxel w;
+                Vector t = v.position.add(Voxel.directions[i+1]);
+                try { w = c.getVoxel(t); }  
+                catch (Exception e) { w = this.getVoxel(t); }
+
+                if (w != null){
+                    v.neighbors[i+1] = w;
+                    w.neighbors[i] = v;
+                }
+            }
+        }
     }
 
     public Vector getChunkVector(Vector p){
@@ -70,36 +97,14 @@ public class ChunkManager {
                             pc.y + (double) y * Chunk.size, 
                            (double) z * Chunk.size
                         );
-                        Chunk c = this.map.get(q);
 
+                        Chunk c = this.map.get(q);
                         // Create chunk if doesn't exist
                         if (c == null){
                             c = this.terrain.createChunk(q);
-
-                            for (Voxel u : c.getVoxelList()){
-                                for (int i = 0; i < Voxel.directions.length; i += 2){
-                                    Voxel v;
-                                    Vector r = u.position.add(Voxel.directions[i]);
-                                    try { v = c.getVoxel(r); }  
-                                    catch (Exception e) { v = this.getVoxel(r); }
-
-                                    if (v != null){
-                                        u.neighbors[i] = v;
-                                        v.neighbors[i+1] = u;
-                                    }
-
-                                    Voxel w;
-                                    Vector t = u.position.add(Voxel.directions[i+1]);
-                                    try { w = c.getVoxel(t); }  
-                                    catch (Exception e) { w = this.getVoxel(t); }
-
-                                    if (w != null){
-                                        u.neighbors[i+1] = w;
-                                        w.neighbors[i] = u;
-                                    }
-                                }
+                            for (Voxel v : c.getVoxelList()){
+                                this.updateVoxelNeighbors(v, c);
                             }
-
                             this.map.put(q, c);
                         }
                         

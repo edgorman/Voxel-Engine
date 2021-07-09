@@ -174,7 +174,7 @@ public class Player{
 
 		if (this.input.debug){
 			g.setColor(Color.black);
-			g.drawString("Voxel Terrain - v0.2", 10, 20);
+			g.drawString("Voxel Terrain - v0.3", 10, 20);
 			g.drawString("FPS: " + (int) w.fps, 10, 40);
 			g.drawString("xyz: " + this.viewFrom/*.scale(1/Voxel.length)*/, 10, 60);
 			g.drawString("Look: " + this.viewTo.subtract(this.viewFrom), 10, 80);
